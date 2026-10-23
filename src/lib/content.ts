@@ -87,8 +87,8 @@ export const THEME_KEY = "northyard-theme";
 export const LANG_KEY = "northyard-lang";
 
 export const DEFAULT_CONTENT: SiteContent = {
-  brandZh: "北庭",
-  brandEn: "Northyard",
+  brandZh: "Jenny Bu",
+  brandEn: "Jenny Bu",
   taglineZh: "空间美学与资产价值",
   taglineEn: "Spatial aesthetics and property value",
   principal: "Jenny Bu",
@@ -99,9 +99,9 @@ export const DEFAULT_CONTENT: SiteContent = {
   cityZh: "多伦多 · 约克区",
   cityEn: "Toronto · York Region",
   aboutZh:
-    "看房的时候，我们同时在看这块地以后的样子。朝向、树、侧院和门前那三米，往往比房间数更决定一栋房子值不值得留下来。\n\n北庭把地产经纪和景观设计放在同一次判断里。买入前，评估改造潜力；挂牌前，用克制的外立面和庭院整理第一眼；入住后，把户外做成真正会用的房间。",
+    "看房的时候，我们同时在看这块地以后的样子。朝向、树、侧院和门前那三米，往往比房间数更决定一栋房子值不值得留下来。\n\nJenny Bu 把地产经纪和景观设计放在同一次判断里。买入前，评估改造潜力；挂牌前，用克制的外立面和庭院整理第一眼；入住后，把户外做成真正会用的房间。",
   aboutEn:
-    "A showing is also a reading of the land. Orientation, trees, the side yard, and the first three metres often matter more than the room count.\n\nNorthyard keeps real estate and landscape in the same judgment. Before a purchase, the potential. Before a listing, a quieter facade and garden. After you arrive, an outdoor room you will actually use.",
+    "A showing is also a reading of the land. Orientation, trees, the side yard, and the first three metres often matter more than the room count.\n\nJenny Bu keeps real estate and landscape in the same judgment. Before a purchase, the potential. Before a listing, a quieter facade and garden. After you arrive, an outdoor room you will actually use.",
   credentials: [
     { zh: "地产顾问 · 大多伦多", en: "Real estate advisory · Greater Toronto" },
     { zh: "景观概念与庭院落地", en: "Landscape concept through to the garden" },

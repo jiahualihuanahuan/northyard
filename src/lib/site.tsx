@@ -71,7 +71,13 @@ export function SiteProvider({ children }: { children: ReactNode }) {
       const raw = localStorage.getItem(CONTENT_KEY);
       if (raw) {
         const parsed = sanitizeContent(JSON.parse(raw));
-        if (parsed) setContent(parsed);
+        if (parsed) {
+          if (parsed.brandZh === "北庭") parsed.brandZh = "Jenny Bu";
+          if (parsed.brandEn === "Northyard") parsed.brandEn = "Jenny Bu";
+          parsed.aboutZh = parsed.aboutZh.replaceAll("北庭", "Jenny Bu");
+          parsed.aboutEn = parsed.aboutEn.replaceAll("Northyard", "Jenny Bu");
+          setContent(parsed);
+        }
       }
       const saved = localStorage.getItem(INQUIRY_KEY);
       if (saved) {
@@ -84,7 +90,8 @@ export function SiteProvider({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
-    document.title = `${content.brandZh} · ${content.brandEn}`;
+    document.title =
+      content.brandZh === content.brandEn ? content.brandEn : `${content.brandZh} · ${content.brandEn}`;
   }, [content.brandZh, content.brandEn]);
 
   const tx = useCallback((zh: string, en: string) => (lang === "zh" ? zh : en), [lang]);

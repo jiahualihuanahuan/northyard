@@ -68,7 +68,7 @@ function InquirePage() {
       `${labels[2]}: ${a3}`,
       note,
     ].join("\n");
-    window.location.href = `mailto:${content.email}?subject=${encodeURIComponent(tx("北庭咨询", "Northyard inquiry"))}&body=${encodeURIComponent(body)}`;
+    window.location.href = `mailto:${content.email}?subject=${encodeURIComponent(tx("Jenny Bu 咨询", "Jenny Bu inquiry"))}&body=${encodeURIComponent(body)}`;
   }
 
   return (

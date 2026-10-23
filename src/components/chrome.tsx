@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
-import { Menu, Moon, Sun, X } from "lucide-react";
+import { Moon, Sun } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { useSite } from "@/lib/site";
 
 const LINKS = [
-  { id: "synergy", zh: "跨界", en: "Synergy" },
-  { id: "estate", zh: "地产", en: "Estate" },
-  { id: "garden", zh: "景观", en: "Garden" },
+  { id: "synergy", zh: "方法", en: "Approach" },
+  { id: "estate", zh: "房产", en: "Homes" },
+  { id: "garden", zh: "庭院", en: "Gardens" },
   { id: "about", zh: "关于", en: "About" },
 ] as const;
 
@@ -17,7 +18,12 @@ export function Nav({ overlay = false }: { overlay?: boolean }) {
   const navigate = useNavigate();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const onPhoto = overlay && pathname === "/" && !scrolled && !open;
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -54,8 +60,8 @@ export function Nav({ overlay = false }: { overlay?: boolean }) {
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-40 transition-colors duration-300",
-        onPhoto ? "bg-transparent text-on-photo" : "border-b border-line bg-canvas/92 text-ink backdrop-blur-md",
+        "fixed inset-x-0 top-0 z-40 border-b border-line bg-canvas text-ink lg:transition-colors lg:duration-300",
+        onPhoto ? "lg:border-transparent lg:bg-transparent lg:text-on-photo" : "lg:bg-canvas",
       )}
     >
       <div className="flex h-16 items-center justify-between gap-4 px-5 md:px-8 lg:px-12">
@@ -63,7 +69,9 @@ export function Nav({ overlay = false }: { overlay?: boolean }) {
           <span className="display text-3xl leading-none">
             {lang === "zh" ? content.brandZh : content.brandEn}
           </span>
-          <span className="eyebrow hidden xl:inline">{lang === "zh" ? content.brandEn : content.brandZh}</span>
+          {content.brandZh !== content.brandEn ? (
+            <span className="eyebrow hidden xl:inline">{lang === "zh" ? content.brandEn : content.brandZh}</span>
+          ) : null}
         </Link>
         <nav className="hidden items-center gap-7 lg:flex">
           {LINKS.map((link) => (
@@ -97,48 +105,51 @@ export function Nav({ overlay = false }: { overlay?: boolean }) {
           </Link>
           <button
             type="button"
-            className="tap grid size-11 place-items-center lg:hidden"
+            className="tap min-h-11 px-3 text-sm lg:hidden"
             aria-expanded={open}
-            aria-label={open ? tx("关闭菜单", "Close menu") : tx("打开菜单", "Open menu")}
+            aria-label={open ? tx("关闭目录", "Close menu") : tx("打开目录", "Open menu")}
             onClick={() => setOpen((v) => !v)}
           >
-            {open ? <X className="size-5" /> : <Menu className="size-5" />}
+            {open ? tx("关闭", "Close") : tx("目录", "Menu")}
           </button>
         </div>
       </div>
-      <div
-        className={cn(
-          "fixed inset-0 z-50 bg-canvas text-ink transition-opacity duration-300 lg:hidden",
-          open ? "opacity-100" : "pointer-events-none opacity-0",
-        )}
-        aria-hidden={!open}
-      >
-        <div className="flex h-16 items-center justify-end px-5">
-          <button
-            type="button"
-            className="grid size-11 place-items-center"
-            onClick={() => setOpen(false)}
-            aria-label={tx("关闭菜单", "Close menu")}
-          >
-            <X className="size-5" />
-          </button>
-        </div>
-        <div className="flex flex-col px-6 pt-8">
-          {LINKS.map((link) => (
-            <button
-              key={link.id}
-              type="button"
-              className="display border-b border-line py-4 text-left text-5xl"
-              onClick={() => go(link.id)}
+      {mounted && open
+        ? createPortal(
+            <div
+              className="fixed inset-0 z-[80] flex flex-col lg:hidden"
+              style={{ background: "var(--color-canvas)", color: "var(--color-ink)" }}
             >
-              {lang === "zh" ? link.zh : link.en}
-            </button>
-          ))}
-          <Link to="/inquire" className="display py-4 text-5xl" onClick={() => setOpen(false)}>
-            {tx("预约", "Inquire")}
-          </Link>
-        </div>
-      </div>
+              <div className="flex h-16 items-center justify-between px-5">
+                <p className="display text-2xl leading-none">{lang === "zh" ? content.brandZh : content.brandEn}</p>
+                <button
+                  type="button"
+                  className="tap min-h-11 px-3 text-sm"
+                  onClick={() => setOpen(false)}
+                  aria-label={tx("关闭目录", "Close menu")}
+                >
+                  {tx("关闭", "Close")}
+                </button>
+              </div>
+              <div className="flex flex-col px-6 pt-6">
+                {LINKS.map((link) => (
+                  <button
+                    key={link.id}
+                    type="button"
+                    className="border-b border-line py-5 text-left text-3xl"
+                    onClick={() => go(link.id)}
+                  >
+                    {lang === "zh" ? link.zh : link.en}
+                  </button>
+                ))}
+                <Link to="/inquire" className="py-5 text-3xl" onClick={() => setOpen(false)}>
+                  {tx("预约", "Inquire")}
+                </Link>
+              </div>
+            </div>,
+            document.body,
+          )
+        : null}
     </header>
   );
 }

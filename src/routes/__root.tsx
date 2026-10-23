@@ -13,10 +13,10 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "北庭 · Northyard" },
+      { title: "Jenny Bu" },
       {
         name: "description",
-        content: "北庭 Northyard — 地产与景观。空间美学与资产价值。Real estate and landscape, read as one practice.",
+        content: "Jenny Bu — real estate and landscape. 地产与景观，空间美学与资产价值。",
       },
       { name: "theme-color", content: "#12110f" },
     ],
