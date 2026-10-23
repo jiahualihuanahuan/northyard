@@ -18,7 +18,7 @@ export const Route = createRootRoute({
         name: "description",
         content: "北庭 Northyard — 地产与景观。空间美学与资产价值。Real estate and landscape, read as one practice.",
       },
-      { name: "theme-color", content: "#f3efe7" },
+      { name: "theme-color", content: "#12110f" },
     ],
     links: [
       { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
@@ -31,7 +31,7 @@ export const Route = createRootRoute({
     ],
   }),
   component: () => (
-    <html lang="zh" suppressHydrationWarning>
+    <html lang="en" data-theme="dark" data-lang="en" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_BOOT }} />
         <HeadContent />

@@ -55,8 +55,8 @@ function applyLang(lang: Lang) {
 
 export function SiteProvider({ children }: { children: ReactNode }) {
   const [content, setContent] = useState<SiteContent>(DEFAULT_CONTENT);
-  const [lang, setLangState] = useState<Lang>("zh");
-  const [theme, setThemeState] = useState<Theme>("light");
+  const [lang, setLangState] = useState<Lang>("en");
+  const [theme, setThemeState] = useState<Theme>("dark");
   const [inquiries, setInquiries] = useState<Inquiry[]>([]);
   const [saveError, setSaveError] = useState("");
   const timer = useRef<number | null>(null);
