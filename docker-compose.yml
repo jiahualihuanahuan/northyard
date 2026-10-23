@@ -1,0 +1,9 @@
+services:
+  web:
+    build: .
+    ports:
+      - "1206:1206"
+    environment:
+      HOST: 0.0.0.0
+      PORT: 1206
+    restart: unless-stopped
