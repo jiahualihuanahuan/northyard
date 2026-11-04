@@ -12,13 +12,12 @@ import { useNavigate } from "@tanstack/react-router";
 import {
   CONTENT_KEY,
   DEFAULT_CONTENT,
-  INQUIRY_KEY,
   LANG_KEY,
   THEME_KEY,
   sanitizeContent,
-  type Inquiry,
   type Lang,
   type SiteContent,
+  type T,
   type Theme,
 } from "@/lib/content";
 
@@ -26,15 +25,13 @@ type SiteValue = {
   content: SiteContent;
   lang: Lang;
   theme: Theme;
-  inquiries: Inquiry[];
   saveError: string;
   tx: (zh: string, en: string) => string;
+  t: (text: T) => string;
   setLang: (lang: Lang) => void;
   setTheme: (theme: Theme) => void;
   updateContent: (next: SiteContent) => void;
   resetContent: () => void;
-  addInquiry: (item: Omit<Inquiry, "id" | "at">) => void;
-  removeInquiry: (id: string) => void;
   open: (to: string, params?: Record<string, string>) => void;
 };
 
@@ -57,7 +54,6 @@ export function SiteProvider({ children }: { children: ReactNode }) {
   const [content, setContent] = useState<SiteContent>(DEFAULT_CONTENT);
   const [lang, setLangState] = useState<Lang>("en");
   const [theme, setThemeState] = useState<Theme>("dark");
-  const [inquiries, setInquiries] = useState<Inquiry[]>([]);
   const [saveError, setSaveError] = useState("");
   const timer = useRef<number | null>(null);
   const navigate = useNavigate();
@@ -71,18 +67,7 @@ export function SiteProvider({ children }: { children: ReactNode }) {
       const raw = localStorage.getItem(CONTENT_KEY);
       if (raw) {
         const parsed = sanitizeContent(JSON.parse(raw));
-        if (parsed) {
-          if (parsed.brandZh === "北庭") parsed.brandZh = "Jenny Bu";
-          if (parsed.brandEn === "Northyard") parsed.brandEn = "Jenny Bu";
-          parsed.aboutZh = parsed.aboutZh.replaceAll("北庭", "Jenny Bu");
-          parsed.aboutEn = parsed.aboutEn.replaceAll("Northyard", "Jenny Bu");
-          setContent(parsed);
-        }
-      }
-      const saved = localStorage.getItem(INQUIRY_KEY);
-      if (saved) {
-        const arr = JSON.parse(saved) as unknown;
-        if (Array.isArray(arr)) setInquiries(arr as Inquiry[]);
+        if (parsed) setContent(parsed);
       }
     } catch {
       /* keep defaults */
@@ -90,11 +75,11 @@ export function SiteProvider({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
-    document.title =
-      content.brandZh === content.brandEn ? content.brandEn : `${content.brandZh} · ${content.brandEn}`;
-  }, [content.brandZh, content.brandEn]);
+    if (!document.title) document.title = content.brandEn;
+  }, [content.brandEn]);
 
   const tx = useCallback((zh: string, en: string) => (lang === "zh" ? zh : en), [lang]);
+  const t = useCallback((text: T) => (lang === "zh" ? text.zh || text.en : text.en), [lang]);
 
   const setLang = useCallback((next: Lang) => {
     setLangState(next);
@@ -126,26 +111,6 @@ export function SiteProvider({ children }: { children: ReactNode }) {
     setSaveError("");
   }, []);
 
-  const addInquiry = useCallback((item: Omit<Inquiry, "id" | "at">) => {
-    setInquiries((prev) => {
-      const next = [{ ...item, id: crypto.randomUUID(), at: new Date().toISOString() }, ...prev];
-      try {
-        localStorage.setItem(INQUIRY_KEY, JSON.stringify(next));
-      } catch {
-        /* ignore quota */
-      }
-      return next;
-    });
-  }, []);
-
-  const removeInquiry = useCallback((id: string) => {
-    setInquiries((prev) => {
-      const next = prev.filter((item) => item.id !== id);
-      localStorage.setItem(INQUIRY_KEY, JSON.stringify(next));
-      return next;
-    });
-  }, []);
-
   const open = useCallback(
     (to: string, params?: Record<string, string>) => {
       const go = () => {
@@ -167,30 +132,26 @@ export function SiteProvider({ children }: { children: ReactNode }) {
       content,
       lang,
       theme,
-      inquiries,
       saveError,
       tx,
+      t,
       setLang,
       setTheme,
       updateContent,
       resetContent,
-      addInquiry,
-      removeInquiry,
       open,
     }),
     [
       content,
       lang,
       theme,
-      inquiries,
       saveError,
       tx,
+      t,
       setLang,
       setTheme,
       updateContent,
       resetContent,
-      addInquiry,
-      removeInquiry,
       open,
     ],
   );

@@ -10,14 +10,20 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as InquireRouteImport } from './routes/inquire'
 import { Route as StudioRouteImport } from './routes/studio'
 import { Route as GardenIdRouteImport } from './routes/garden.$id'
-import { Route as PropertyIdRouteImport } from './routes/property.$id'
+import { Route as WorkIdRouteImport } from './routes/work.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
 const InquireRoute = InquireRouteImport.update({
@@ -35,49 +41,60 @@ const GardenIdRoute = GardenIdRouteImport.update({
   path: '/garden/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PropertyIdRoute = PropertyIdRouteImport.update({
-  id: '/property/$id',
-  path: '/property/$id',
+const WorkIdRoute = WorkIdRouteImport.update({
+  id: '/work/$id',
+  path: '/work/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/contact': typeof ContactRoute
   '/inquire': typeof InquireRoute
   '/studio': typeof StudioRoute
   '/garden/$id': typeof GardenIdRoute
-  '/property/$id': typeof PropertyIdRoute
+  '/work/$id': typeof WorkIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/contact': typeof ContactRoute
   '/inquire': typeof InquireRoute
   '/studio': typeof StudioRoute
   '/garden/$id': typeof GardenIdRoute
-  '/property/$id': typeof PropertyIdRoute
+  '/work/$id': typeof WorkIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/contact': typeof ContactRoute
   '/inquire': typeof InquireRoute
   '/studio': typeof StudioRoute
   '/garden/$id': typeof GardenIdRoute
-  '/property/$id': typeof PropertyIdRoute
+  '/work/$id': typeof WorkIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/inquire' | '/studio' | '/garden/$id' | '/property/$id'
+  fullPaths:
+    '/' | '/contact' | '/inquire' | '/studio' | '/garden/$id' | '/work/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/inquire' | '/studio' | '/garden/$id' | '/property/$id'
+  to: '/' | '/contact' | '/inquire' | '/studio' | '/garden/$id' | '/work/$id'
   id:
-    '__root__' | '/' | '/inquire' | '/studio' | '/garden/$id' | '/property/$id'
+    | '__root__'
+    | '/'
+    | '/contact'
+    | '/inquire'
+    | '/studio'
+    | '/garden/$id'
+    | '/work/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ContactRoute: typeof ContactRoute
   InquireRoute: typeof InquireRoute
   StudioRoute: typeof StudioRoute
   GardenIdRoute: typeof GardenIdRoute
-  PropertyIdRoute: typeof PropertyIdRoute
+  WorkIdRoute: typeof WorkIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -87,6 +104,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/inquire': {
@@ -110,11 +134,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GardenIdRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/property/$id': {
-      id: '/property/$id'
-      path: '/property/$id'
-      fullPath: '/property/$id'
-      preLoaderRoute: typeof PropertyIdRouteImport
+    '/work/$id': {
+      id: '/work/$id'
+      path: '/work/$id'
+      fullPath: '/work/$id'
+      preLoaderRoute: typeof WorkIdRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -122,10 +146,11 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ContactRoute: ContactRoute,
   InquireRoute: InquireRoute,
   StudioRoute: StudioRoute,
   GardenIdRoute: GardenIdRoute,
-  PropertyIdRoute: PropertyIdRoute,
+  WorkIdRoute: WorkIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

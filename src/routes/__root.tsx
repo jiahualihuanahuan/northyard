@@ -2,7 +2,10 @@ import { createRootRoute, HeadContent, Outlet, Scripts } from "@tanstack/react-r
 import { AuthProvider } from "@/lib/auth/provider";
 import { PreviewHostBridge } from "@/components/preview-host-bridge";
 import { SiteProvider } from "@/lib/site";
-import { THEME_BOOT } from "@/lib/content";
+import { SITE_URL, THEME_BOOT } from "@/lib/content";
+
+const DESCRIPTION =
+  "Landscape architecture and outdoor living for homes across Toronto and York Region: pools, terraces, outdoor kitchens and lit entries, designed as one.";
 import appCss from "../styles.css?url";
 
 const FONT =
@@ -16,11 +19,18 @@ export const Route = createRootRoute({
       { title: "Jenny Bu — Landscape Architecture & Outdoor Living" },
       {
         name: "description",
-        content: "Jenny Bu — landscape architecture in Toronto and York Region: pool courts, terraces, outdoor kitchens, entries, and lighting. Real estate advisory as a secondary service. 景观设计与户外生活空间。",
+        content: DESCRIPTION,
       },
+      { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "Jenny Bu" },
+      { property: "og:title", content: "Jenny Bu — Landscape Architecture & Outdoor Living" },
+      { property: "og:description", content: DESCRIPTION },
+      { property: "og:url", content: SITE_URL },
+      { property: "og:image", content: `${SITE_URL}/images/landscape/sunset-pool-spillover-spa-lounge.webp` },
       { name: "theme-color", content: "#12110f" },
     ],
     links: [
+      { rel: "canonical", href: SITE_URL },
       { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },

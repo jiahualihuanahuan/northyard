@@ -6,9 +6,9 @@ import { cn } from "@/lib/cn";
 import { useSite } from "@/lib/site";
 
 const LINKS = [
-  { id: "garden", zh: "景观作品", en: "Landscape" },
-  { id: "about", zh: "设计师", en: "Studio" },
-  { id: "estate", zh: "房产", en: "Real estate" },
+  { id: "work", zh: "作品", en: "Work" },
+  { id: "services", zh: "服务", en: "Services" },
+  { id: "process", zh: "流程", en: "Process" },
 ] as const;
 
 export function Nav({ overlay = false }: { overlay?: boolean }) {
@@ -97,10 +97,10 @@ export function Nav({ overlay = false }: { overlay?: boolean }) {
             {theme === "dark" ? <Sun className="size-4" /> : <Moon className="size-4" />}
           </button>
           <Link
-            to="/inquire"
+            to="/contact"
             className="tap ml-1 hidden min-h-11 items-center border px-4 text-sm line-soft lg:inline-flex"
           >
-            {tx("预约", "Inquire")}
+            {tx("联系", "Contact")}
           </Link>
           <button
             type="button"
@@ -141,8 +141,8 @@ export function Nav({ overlay = false }: { overlay?: boolean }) {
                     {lang === "zh" ? link.zh : link.en}
                   </button>
                 ))}
-                <Link to="/inquire" className="py-5 text-3xl" onClick={() => setOpen(false)}>
-                  {tx("预约", "Inquire")}
+                <Link to="/contact" className="py-5 text-3xl" onClick={() => setOpen(false)}>
+                  {tx("联系", "Contact")}
                 </Link>
               </div>
             </div>,
@@ -154,34 +154,57 @@ export function Nav({ overlay = false }: { overlay?: boolean }) {
 }
 
 export function Footer() {
-  const { content, lang, tx } = useSite();
+  const { content, lang, t, tx } = useSite();
   const year = new Date().getFullYear();
   return (
     <footer className="border-t border-line px-5 py-12 md:px-8 lg:px-12">
       <div className="grid gap-10 md:grid-cols-4">
         <div className="md:col-span-2">
           <p className="display text-4xl">{lang === "zh" ? content.brandZh : content.brandEn}</p>
-          <p className="mt-3 max-w-sm text-sm leading-6 text-muted">{tx(content.taglineZh, content.taglineEn)}</p>
+          <p className="mt-3 max-w-sm text-sm leading-6 text-muted">{t(content.tagline)}</p>
         </div>
         <div className="text-sm leading-7">
           <p className="eyebrow text-muted">{tx("服务地区", "Where")}</p>
-          <p className="mt-3">{tx(content.cityZh, content.cityEn)}</p>
-          {content.phone ? <p>{content.phone}</p> : null}
-          {content.email ? <p>{content.email}</p> : null}
+          <p className="mt-3">{t(content.city)}</p>
+          <ContactLinks />
         </div>
         <div className="flex flex-col items-start gap-1 text-sm">
-          <Link to="/inquire" className="inline-flex min-h-11 items-center">
-            {tx("预约咨询", "Book a conversation")}
-          </Link>
-          <Link to="/studio" className="inline-flex min-h-11 items-center text-muted">
-            {tx("内容工作室", "Content studio")}
+          <Link to="/contact" className="inline-flex min-h-11 items-center">
+            {tx("开始一个项目", "Start a project")}
           </Link>
         </div>
       </div>
       <p className="mt-12 text-sm text-muted">
-        © {year} {content.brandEn}. {tx("示范内容可在工作室里替换成你的照片与介绍。", "Sample studies can be replaced with your own photographs and words in the studio.")}
+        © {year} {content.brandEn}.{" "}
+        {tx("作品图片均为设计效果图。", "Work shown as concept renderings.")}
       </p>
     </footer>
+  );
+}
+
+function telHref(phone: string) {
+  return `tel:+1${phone.replace(/\D/g, "").replace(/^1(?=\d{10}$)/, "")}`;
+}
+
+export function ContactLinks() {
+  const { content } = useSite();
+  return (
+    <>
+      {content.phone ? (
+        <p>
+          <a href={telHref(content.phone)} className="inline-flex min-h-11 items-center">
+            {content.phone}
+          </a>
+        </p>
+      ) : null}
+      {content.email ? (
+        <p>
+          <a href={`mailto:${content.email}`} className="inline-flex min-h-11 items-center">
+            {content.email}
+          </a>
+        </p>
+      ) : null}
+    </>
   );
 }
 
@@ -193,10 +216,4 @@ export function Page({ children, overlay = false }: { children: React.ReactNode;
       <Footer />
     </div>
   );
-}
-
-export function statusLabel(status: string, tx: (zh: string, en: string) => string) {
-  if (status === "active") return tx("在售", "Listed");
-  if (status === "sold") return tx("成交", "Sold");
-  return tx("示范", "Study");
 }

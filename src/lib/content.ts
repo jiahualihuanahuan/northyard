@@ -1,429 +1,271 @@
 export type Lang = "zh" | "en";
 export type Theme = "light" | "dark";
-export type ListingStatus = "sample" | "active" | "sold";
-export type GardenMode = "before" | "viz";
 
-export type Property = {
+/** Bilingual text: `en` is the published market copy, `zh` is for the owner / Chinese toggle. */
+export type T = { en: string; zh: string };
+
+export type Work = {
   id: string;
-  status: ListingStatus;
-  neighborhoodZh: string;
-  neighborhoodEn: string;
-  titleZh: string;
-  titleEn: string;
-  price: string;
-  beds: string;
-  baths: string;
-  sqft: string;
-  summaryZh: string;
-  summaryEn: string;
-  storyZh: string;
-  storyEn: string;
-  readZh: string;
-  readEn: string;
   image: string;
+  alt: T;
+  title: T;
+  body: T;
 };
 
-export type Garden = {
-  id: string;
-  categoryZh: string;
-  categoryEn: string;
-  titleZh: string;
-  titleEn: string;
-  summaryZh: string;
-  summaryEn: string;
-  storyZh: string;
-  storyEn: string;
-  before: string;
-  after: string;
-  mode: GardenMode;
-};
-
-export type Neighborhood = {
-  id: string;
-  nameZh: string;
-  nameEn: string;
-  noteZh: string;
-  noteEn: string;
-  image: string;
-};
-
-export type Credential = { zh: string; en: string };
+export type Item = { title: T; body: T };
 
 export type SiteContent = {
   brandZh: string;
   brandEn: string;
-  taglineZh: string;
-  taglineEn: string;
-  principal: string;
-  roleZh: string;
-  roleEn: string;
+  tagline: T;
   email: string;
   phone: string;
-  cityZh: string;
-  cityEn: string;
-  aboutZh: string;
-  aboutEn: string;
-  credentials: Credential[];
-  properties: Property[];
-  gardens: Garden[];
-  neighborhoods: Neighborhood[];
+  city: T;
+  hero: { image: string; alt: T; headline: T; body: T; primaryCta: T; secondaryCta: T };
+  approach: { image: string; alt: T; headline: T; body: T };
+  workSection: { headline: T };
+  work: Work[];
+  services: { headline: T; items: Item[] };
+  process: { headline: T; steps: Item[] };
+  advisory: { enabled: boolean; image: string; alt: T; headline: T; body: T; cta: T };
+  contactCta: { image: string; alt: T; headline: T; body: T; cta: T };
+  contactPage: { image: string; intro: T };
 };
 
-export type Inquiry = {
-  id: string;
-  at: string;
-  intent: "estate" | "garden" | "both";
-  name: string;
-  contact: string;
-  a1: string;
-  a2: string;
-  a3: string;
-  note: string;
-};
-
-export const CONTENT_KEY = "northyard-content-v2";
-export const INQUIRY_KEY = "northyard-inquiries-v1";
+export const CONTENT_KEY = "northyard-content-v3";
 export const THEME_KEY = "northyard-theme";
 export const LANG_KEY = "northyard-lang";
+export const SITE_URL = "https://jennybu.ca";
 
 const IMG = "/images/landscape";
+export const IMAGES = {
+  sunset: `${IMG}/sunset-pool-spillover-spa-lounge.webp`,
+  firePit: `${IMG}/backyard-fire-pit-outdoor-kitchen.webp`,
+  pergola: `${IMG}/outdoor-kitchen-timber-pergola.webp`,
+  nightPool: `${IMG}/night-aerial-pool-waterfall-putting-green.webp`,
+  estate: `${IMG}/aerial-estate-pool-hot-tub-driveway.webp`,
+  entry: `${IMG}/front-entry-stone-pillars-lighting.webp`,
+} as const;
+
+const ALT = {
+  sunset: {
+    en: "Concept rendering: a rectangular pool with a spillover spa and lounge deck at sunset",
+    zh: "设计效果图：日落时的长方形泳池、溢流按摩池与躺椅平台",
+  },
+  firePit: {
+    en: "Concept rendering: a backyard terrace with a sunken fire pit and outdoor kitchen",
+    zh: "设计效果图：带下沉火炉与户外厨房的后院露台",
+  },
+  pergola: {
+    en: "Concept rendering: an outdoor kitchen and bar beneath a timber pergola",
+    zh: "设计效果图：木构廊架下的户外厨房与吧台",
+  },
+  nightPool: {
+    en: "Concept rendering: night aerial view of a rounded pool, rock waterfall and putting green",
+    zh: "设计效果图：夜晚俯瞰圆形泳池、岩石瀑布与推杆果岭",
+  },
+  estate: {
+    en: "Concept rendering: aerial view of a home from driveway to terrace, hot tub and pool",
+    zh: "设计效果图：俯瞰住宅，从车道到露台、热水池与泳池",
+  },
+  entry: {
+    en: "Concept rendering: a lit front entry with stone pillars and layered planting",
+    zh: "设计效果图：石柱、层次种植与灯光点亮的前门入口",
+  },
+} satisfies Record<keyof typeof IMAGES, T>;
 
 export const DEFAULT_CONTENT: SiteContent = {
   brandZh: "Jenny Bu",
   brandEn: "Jenny Bu",
-  taglineZh: "景观设计 · 户外生活空间",
-  taglineEn: "Landscape architecture and outdoor living",
-  principal: "Jenny Bu",
-  roleZh: "景观设计主理人",
-  roleEn: "Principal, landscape design",
-  email: "",
-  phone: "",
-  cityZh: "多伦多 · 约克区",
-  cityEn: "Toronto · York Region",
-  aboutZh:
-    "一块地真正的价值，在它被走进、被坐下、被点亮的样子。泳池、露台、户外厨房、入口和种植，应该是一套连贯的设计，而不是一件件堆上去的东西。\n\nJenny Bu 的工作从景观开始：勘测、概念、材料与灯光，一直到落地。需要时，同一双眼睛也会在买房或挂牌前，帮你读懂一块地的潜力。",
-  aboutEn:
-    "The real value of a property is how its land is walked, sat in, and lit. Pools, terraces, outdoor kitchens, entries, and planting should read as one design — not a list of features added one at a time.\n\nJenny Bu's work starts with the landscape: survey, concept, materials, and lighting, through to the built garden. When it helps, the same eye can also read a lot's potential before a purchase or a listing.",
-  credentials: [
-    { zh: "景观概念、方案与落地", en: "Landscape concept, design, and build-out" },
-    { zh: "泳池庭院、露台与户外厨房", en: "Pool courts, terraces, and outdoor kitchens" },
-    { zh: "地产顾问 · 大多伦多（辅助服务）", en: "Real estate advisory · Greater Toronto (secondary)" },
-  ],
-  properties: [
-    {
-      id: "estate-grounds",
-      status: "sample",
-      neighborhoodZh: "示范",
-      neighborhoodEn: "Study",
-      titleZh: "从地块读一栋房子",
-      titleEn: "Reading a house through its grounds",
-      price: "",
-      beds: "",
-      baths: "",
-      sqft: "",
-      summaryZh: "车道、泳池、露台和绿篱的关系，决定这块地还能长成什么。",
-      summaryEn: "How the drive, pool, terraces, and hedges relate decides what the land can still become.",
-      storyZh:
-        "买入之前，先看地：车道如何引向门口，泳池和露台占了哪里的阳光，绿篱留出了多少私密。这些比房间数更难改，也更值得提前看清。",
-      storyEn:
-        "Before a purchase, read the land: how the drive leads to the door, where the pool and terraces take the sun, how much privacy the hedges hold. These are harder to change than rooms, and worth seeing early.",
-      readZh: "示范内容，可在工作室替换为你自己的房源。",
-      readEn: "A sample study — replace it with your own listings in the studio.",
-      image: `${IMG}/aerial-estate-pool-hot-tub-driveway.webp`,
+  tagline: { en: "Landscape architecture and outdoor living", zh: "景观设计 · 户外生活空间" },
+  email: "askjennybu@gmail.com",
+  phone: "647-879-1206",
+  city: { en: "Toronto · York Region", zh: "多伦多 · 约克区" },
+  hero: {
+    image: IMAGES.sunset,
+    alt: ALT.sunset,
+    headline: { en: "Landscapes designed to be lived in.", zh: "为生活而设计的景观。" },
+    body: {
+      en: "Landscape architecture and outdoor living for homes across Toronto and York Region: pools, terraces, outdoor kitchens and lit entries, designed as one.",
+      zh: "服务多伦多与约克区的住宅：泳池、露台、户外厨房、入口灯光，作为一个整体来设计。",
     },
-    {
-      id: "first-glance",
-      status: "sample",
-      neighborhoodZh: "示范",
-      neighborhoodEn: "Study",
-      titleZh: "挂牌前的第一眼",
-      titleEn: "The first glance before a listing",
-      price: "",
-      beds: "",
-      baths: "",
-      sqft: "",
-      summaryZh: "入口、台阶和灯光，是买家记住一栋房子的第一个画面。",
-      summaryEn: "The entry, the steps, and the light are the first picture a buyer keeps.",
-      storyZh:
-        "挂牌之前，把入口整理清楚：石柱和台阶有秩序，种植池收住边界，灯光把路径和树轻轻点亮。",
-      storyEn:
-        "Before a listing, make the entry clear: ordered pillars and steps, planters that hold the edges, and light that gently picks out the path and the trees.",
-      readZh: "示范内容，可在工作室替换为你自己的房源。",
-      readEn: "A sample study — replace it with your own listings in the studio.",
-      image: `${IMG}/front-entry-stone-pillars-lighting.webp`,
+    primaryCta: { en: "Start a project", zh: "开始一个项目" },
+    secondaryCta: { en: "View the work", zh: "查看作品" },
+  },
+  approach: {
+    image: IMAGES.estate,
+    alt: ALT.estate,
+    headline: { en: "One property, one design.", zh: "一块地，一套设计。" },
+    body: {
+      en: "The drive, the entry, the terrace and the pool are a single sequence, not a list of features added one at a time. We plan how the land is walked, where people gather, and how it reads from the street to the back fence, then carry that through materials, planting and light.",
+      zh: "车道、入口、露台、泳池是一条连贯的动线，而不是一件件堆上去的设施。我们先规划人怎么走、在哪里停留、从街口到后院怎样被看见，再把这个思路贯穿到材料、种植和灯光里。",
     },
-  ],
-  gardens: [
+  },
+  workSection: { headline: { en: "Selected work (concept designs)", zh: "精选作品（设计方案）" } },
+  work: [
     {
       id: "sunset-pool",
-      categoryZh: "泳池庭院",
-      categoryEn: "Pool court",
-      titleZh: "日落时的泳池",
-      titleEn: "The pool at sunset",
-      summaryZh: "带溢流水疗池的长方形泳池、躺椅、户外起居区和观赏草。",
-      summaryEn: "A lit rectangular pool with a spillover spa, loungers, an outdoor lounge, and ornamental grasses.",
-      storyZh:
-        "泳池、水疗池和起居区沿着同一条轴线展开，从屋内一路延伸到花园。观赏草软化了铺装的边缘，灯光让水面在天黑后成为主角。",
-      storyEn:
-        "Pool, spa, and lounge sit on one line that carries the eye from the house into the garden. Ornamental grasses soften the paving, and lighting lets the water take over after dark.",
-      before: "",
-      after: `${IMG}/sunset-pool-spillover-spa-lounge.webp`,
-      mode: "viz",
+      image: IMAGES.sunset,
+      alt: ALT.sunset,
+      title: { en: "The pool at golden hour.", zh: "黄昏泳池。" },
+      body: {
+        en: "A spillover spa feeds the main pool, and the lounge deck faces west to catch the last of the light. Stone, water and planting are composed for the hours the yard is used most.",
+        zh: "溢流式按摩池连接主泳池，躺椅平台朝西，留住最后的阳光。石材、水面与植物，为最常使用的时段而布局。",
+      },
     },
     {
       id: "fire-pit-yard",
-      categoryZh: "后院",
-      categoryEn: "Rear garden",
-      titleZh: "火塘与户外厨房",
-      titleEn: "Fire pit and outdoor kitchen",
-      summaryZh: "火塘、红色坐垫藤椅、石砌烧烤厨房、深色廊架、汀步与多年生花境。",
-      summaryEn: "A fire pit with red-cushioned wicker seating, a stone BBQ kitchen, a dark pergola, stepping stones, lawn, and perennial beds.",
-      storyZh:
-        "火塘把人聚在一起，石砌厨房和廊架定义了用餐的一侧。汀步穿过草坪，多年生花境把整个后院的边界收得柔和。",
-      storyEn:
-        "The fire pit gathers people; the stone kitchen and pergola define the dining side. Stepping stones cross the lawn, and perennial beds soften the edges of the whole yard.",
-      before: "",
-      after: `${IMG}/backyard-fire-pit-outdoor-kitchen.webp`,
-      mode: "viz",
+      image: IMAGES.firePit,
+      alt: ALT.firePit,
+      title: { en: "Fire pit and outdoor kitchen.", zh: "火炉与户外厨房。" },
+      body: {
+        en: "Cooking and gathering share one terrace, so the host is never cut off from the conversation. A sunken fire circle anchors the evening.",
+        zh: "烹饪区与聚会区在同一露台上，主人做饭时也不脱离人群；下沉式火炉成为夜晚的中心。",
+      },
     },
     {
       id: "pergola-kitchen",
-      categoryZh: "户外厨房",
-      categoryEn: "Outdoor kitchen",
-      titleZh: "廊架下的吧台",
-      titleEn: "A bar under the pergola",
-      summaryZh: "木结构廊架下的户外厨房，花岗岩吧台、高脚凳、灯笼和绣球花池。",
-      summaryEn: "An outdoor kitchen under a timber pergola, with a granite bar, stools, lanterns, and a hydrangea planter.",
-      storyZh:
-        "廊架给厨房一个屋顶，也给夜晚一个尺度。花岗岩吧台让做饭的人和坐着的人面对面，绣球和灯笼让这里像一个真正的房间。",
-      storyEn:
-        "The pergola gives the kitchen a roof and the evening a scale. The granite bar puts the cook and the guests face to face; hydrangeas and lanterns make it feel like a real room.",
-      before: "",
-      after: `${IMG}/outdoor-kitchen-timber-pergola.webp`,
-      mode: "viz",
+      image: IMAGES.pergola,
+      alt: ALT.pergola,
+      title: { en: "A kitchen under timber.", zh: "木构廊架下的厨房。" },
+      body: {
+        en: "A timber pergola frames the outdoor kitchen and bar, giving shade by day and a warm, defined room at night.",
+        zh: "木质廊架围合出户外厨房与吧台，白天遮阳，夜晚成为一个温暖、有边界的“房间”。",
+      },
     },
     {
       id: "waterfall-pool-night",
-      categoryZh: "夜景",
-      categoryEn: "Night landscape",
-      titleZh: "岩石瀑布与圆形泳池",
-      titleEn: "Round pool and rock waterfall",
-      summaryZh: "夜间鸟瞰：圆形泳池与岩石瀑布、带灯光的弧形铺装露台、推杆果岭和红色遮阳伞。",
-      summaryEn: "A night aerial: a round pool with a rock waterfall, curved lit paver patios, a putting green, and red umbrellas.",
-      storyZh:
-        "弧形的露台围绕圆形泳池展开，岩石瀑布成为视觉焦点。夜间照明把各个区域串成一条可以走的路线。",
-      storyEn:
-        "Curved patios wrap the round pool, with the rock waterfall as the focal point. Night lighting ties each area into a route you can walk.",
-      before: "",
-      after: `${IMG}/night-aerial-pool-waterfall-putting-green.webp`,
-      mode: "viz",
+      image: IMAGES.nightPool,
+      alt: ALT.nightPool,
+      title: { en: "Water, stone and play after dark.", zh: "夜色中的水、石与游戏。" },
+      body: {
+        en: "A rounded pool with a rock waterfall sits beside a putting green. Lighting turns the whole yard into a night-time landscape.",
+        zh: "圆形泳池配岩石瀑布，旁边是推杆果岭；灯光让整个后院在夜里成为另一种风景。",
+      },
     },
     {
       id: "estate-aerial",
-      categoryZh: "整体规划",
-      categoryEn: "Master plan",
-      titleZh: "从车道到泳池",
-      titleEn: "From the drive to the pool",
-      summaryZh: "白天鸟瞰：长方形泳池与按摩池、铺装露台、带花坛的弧形车道和绿篱。",
-      summaryEn: "A daytime aerial: a rectangular pool and hot tub, paver patios, a curved driveway with a flower bed, and hedges.",
-      storyZh:
-        "整块地作为一个整体来规划：弧形车道和花坛安排到达，绿篱划出私密，泳池和露台占据后院最好的阳光。",
-      storyEn:
-        "The whole property planned as one: a curved drive and flower bed shape the arrival, hedges set the privacy, and the pool and patios take the best sun in the rear.",
-      before: "",
-      after: `${IMG}/aerial-estate-pool-hot-tub-driveway.webp`,
-      mode: "viz",
+      image: IMAGES.estate,
+      alt: ALT.estate,
+      title: { en: "From the drive to the pool.", zh: "从车道到泳池。" },
+      body: {
+        en: "Seen from above, arrival, house, terrace, hot tub and pool read as one continuous plan.",
+        zh: "从空中看，到达、住宅、露台、热水池和泳池是一张连续的平面。",
+      },
     },
     {
       id: "front-entry",
-      categoryZh: "入口",
-      categoryEn: "Front entry",
-      titleZh: "被点亮的入口",
-      titleEn: "A lit front entry",
-      summaryZh: "黄昏的入口：石柱与台阶、抬高种植池、上照的树和铺装步道。",
-      summaryEn: "An entry at golden hour: stone pillars and steps, raised planters, uplit trees, and a paver walkway.",
-      storyZh:
-        "入口是一栋房子的第一句话。石柱和台阶给出秩序，种植池收住边界，上照的树让到家的路在天黑后依然清楚。",
-      storyEn:
-        "The entry is a house's first sentence. Pillars and steps give it order, planters hold the edges, and uplit trees keep the way home clear after dark.",
-      before: "",
-      after: `${IMG}/front-entry-stone-pillars-lighting.webp`,
-      mode: "viz",
+      image: IMAGES.entry,
+      alt: ALT.entry,
+      title: { en: "A lit front entry.", zh: "点亮的前门入口。" },
+      body: {
+        en: "Stone pillars, layered planting and lighting turn the entry into the home's first impression after dark.",
+        zh: "石柱、层次种植与灯光，让入口成为住宅在夜晚的第一印象。",
+      },
     },
   ],
-  neighborhoods: [
-    {
-      id: "toronto",
-      nameZh: "多伦多",
-      nameEn: "Toronto",
-      noteZh: "城市后院、露台与入口",
-      noteEn: "City rear gardens, terraces, and entries",
-      image: `${IMG}/backyard-fire-pit-outdoor-kitchen.webp`,
+  services: {
+    headline: { en: "What we design.", zh: "我们设计什么" },
+    items: [
+      {
+        title: { en: "Pools & water", zh: "泳池与水景" },
+        body: { en: "Pools, spas and water features set into the landscape.", zh: "融入景观的泳池、按摩池与水景。" },
+      },
+      {
+        title: { en: "Terraces & outdoor kitchens", zh: "露台与户外厨房" },
+        body: { en: "Places to cook, eat and gather outside.", zh: "在户外烹饪、用餐和相聚的地方。" },
+      },
+      {
+        title: { en: "Entries & driveways", zh: "入口与车道" },
+        body: { en: "Arrival sequences with lasting curb appeal.", zh: "经得起时间的到达动线与门面。" },
+      },
+      {
+        title: { en: "Planting & lighting", zh: "种植与灯光" },
+        body: {
+          en: "The layers that make a yard feel finished, day and night.",
+          zh: "让庭院无论白天黑夜都显得完整的那几层。",
+        },
+      },
+    ],
+  },
+  process: {
+    headline: { en: "How it works.", zh: "合作流程" },
+    steps: [
+      { title: { en: "Site visit", zh: "现场勘察" }, body: { en: "We walk the property and listen.", zh: "走一遍场地，听你的想法。" } },
+      {
+        title: { en: "Concept", zh: "概念方案" },
+        body: { en: "A layout and visual direction for the whole site.", zh: "整块地的布局与视觉方向。" },
+      },
+      {
+        title: { en: "Design", zh: "深化设计" },
+        body: { en: "Materials, planting and lighting resolved.", zh: "材料、种植与灯光逐一确定。" },
+      },
+      // TODO(owner): PENDING CONFIRMATION — does Jenny Bu offer build support /
+      // construction coordination? Kept per owner instruction; edit or remove once confirmed.
+      // Do not describe any work as "built" or "completed".
+      {
+        title: { en: "Build support", zh: "施工配合" },
+        body: {
+          en: "Working alongside your contractor through construction.",
+          zh: "在施工阶段与你的施工方配合。",
+        },
+      },
+    ],
+  },
+  advisory: {
+    enabled: true,
+    image: IMAGES.entry,
+    alt: ALT.entry,
+    headline: { en: "Buying or selling? See the land first.", zh: "买房或卖房？先看懂这块地。" },
+    body: {
+      en: "Before a purchase or a listing, a landscape eye can show what a lot could become and what its grounds are worth to the next owner.",
+      zh: "在购买或挂牌前，用景观的眼光判断一块地的潜力，以及庭院对下一位业主的价值。",
     },
-    {
-      id: "york",
-      nameZh: "约克区",
-      nameEn: "York Region",
-      noteZh: "更大的地块、泳池庭院与整体规划",
-      noteEn: "Larger lots, pool courts, and master plans",
-      image: `${IMG}/aerial-estate-pool-hot-tub-driveway.webp`,
+    cta: { en: "Ask about advisory", zh: "咨询地产顾问" },
+  },
+  contactCta: {
+    image: IMAGES.nightPool,
+    alt: ALT.nightPool,
+    headline: { en: "Let's talk about your property.", zh: "聊聊你的房子。" },
+    body: {
+      en: "Tell us about your home and what you'd like the outdoors to do. We'll reply to arrange a first conversation.",
+      zh: "告诉我们你的住宅情况，以及你希望户外空间带来什么，我们会回复并安排初次沟通。",
     },
-  ],
+    cta: { en: "Start a project", zh: "开始一个项目" },
+  },
+  contactPage: {
+    image: IMAGES.pergola,
+    intro: {
+      en: "A few details help us prepare for the first conversation.",
+      zh: "留下几项基本信息，方便我们为第一次沟通做准备。",
+    },
+  },
 };
 
-function str(v: unknown, fallback = ""): string {
-  return typeof v === "string" ? v : fallback;
-}
-
-function asStatus(v: unknown): ListingStatus {
-  return v === "active" || v === "sold" || v === "sample" ? v : "sample";
-}
-
-function asMode(v: unknown): GardenMode {
-  return v === "viz" ? "viz" : "before";
-}
-
+/**
+ * Merge stored (studio-edited) content over the defaults. Anything missing or of the
+ * wrong shape falls back to the default, so stale localStorage cannot break the site.
+ */
 export function sanitizeContent(input: unknown): SiteContent | null {
-  if (!input || typeof input !== "object") return null;
-  const o = input as Partial<SiteContent>;
-  if (typeof o.brandZh !== "string" && typeof o.brandEn !== "string") return null;
-  const base = DEFAULT_CONTENT;
-  const properties = Array.isArray(o.properties)
-    ? o.properties
-        .map((item, i) => {
-          if (!item || typeof item !== "object") return null;
-          const p = item as Partial<Property>;
-          const prop: Property = {
-            id: str(p.id, `p-${i}`),
-            status: asStatus(p.status),
-            neighborhoodZh: str(p.neighborhoodZh),
-            neighborhoodEn: str(p.neighborhoodEn),
-            titleZh: str(p.titleZh, "未命名"),
-            titleEn: str(p.titleEn, "Untitled"),
-            price: str(p.price),
-            beds: str(p.beds),
-            baths: str(p.baths),
-            sqft: str(p.sqft),
-            summaryZh: str(p.summaryZh),
-            summaryEn: str(p.summaryEn),
-            storyZh: str(p.storyZh),
-            storyEn: str(p.storyEn),
-            readZh: str(p.readZh),
-            readEn: str(p.readEn),
-            image: str(p.image, "/images/landscape/aerial-estate-pool-hot-tub-driveway.webp"),
-          };
-          return prop;
-        })
-        .filter((p): p is Property => Boolean(p))
-    : base.properties;
-  const gardens = Array.isArray(o.gardens)
-    ? o.gardens
-        .map((item, i) => {
-          if (!item || typeof item !== "object") return null;
-          const g = item as Partial<Garden>;
-          const garden: Garden = {
-            id: str(g.id, `g-${i}`),
-            categoryZh: str(g.categoryZh),
-            categoryEn: str(g.categoryEn),
-            titleZh: str(g.titleZh, "未命名"),
-            titleEn: str(g.titleEn, "Untitled"),
-            summaryZh: str(g.summaryZh),
-            summaryEn: str(g.summaryEn),
-            storyZh: str(g.storyZh),
-            storyEn: str(g.storyEn),
-            before: str(g.before),
-            after: str(g.after, "/images/landscape/sunset-pool-spillover-spa-lounge.webp"),
-            mode: asMode(g.mode),
-          };
-          return garden;
-        })
-        .filter((g): g is Garden => Boolean(g))
-    : base.gardens;
-  const neighborhoods = Array.isArray(o.neighborhoods)
-    ? o.neighborhoods
-        .map((item, i) => {
-          if (!item || typeof item !== "object") return null;
-          const n = item as Partial<Neighborhood>;
-          const hood: Neighborhood = {
-            id: str(n.id, `n-${i}`),
-            nameZh: str(n.nameZh),
-            nameEn: str(n.nameEn),
-            noteZh: str(n.noteZh),
-            noteEn: str(n.noteEn),
-            image: str(n.image, "/images/landscape/backyard-fire-pit-outdoor-kitchen.webp"),
-          };
-          return hood;
-        })
-        .filter((n): n is Neighborhood => Boolean(n))
-    : base.neighborhoods;
-  const credentials = Array.isArray(o.credentials)
-    ? o.credentials
-        .map((item) => {
-          if (!item || typeof item !== "object") return null;
-          const c = item as Partial<Credential>;
-          return { zh: str(c.zh), en: str(c.en) };
-        })
-        .filter((c): c is Credential => Boolean(c))
-    : base.credentials;
-
-  return {
-    brandZh: str(o.brandZh, base.brandZh),
-    brandEn: str(o.brandEn, base.brandEn),
-    taglineZh: str(o.taglineZh, base.taglineZh),
-    taglineEn: str(o.taglineEn, base.taglineEn),
-    principal: str(o.principal, base.principal),
-    roleZh: str(o.roleZh, base.roleZh),
-    roleEn: str(o.roleEn, base.roleEn),
-    email: str(o.email),
-    phone: str(o.phone),
-    cityZh: str(o.cityZh, base.cityZh),
-    cityEn: str(o.cityEn, base.cityEn),
-    aboutZh: str(o.aboutZh, base.aboutZh),
-    aboutEn: str(o.aboutEn, base.aboutEn),
-    credentials,
-    properties,
-    gardens,
-    neighborhoods,
-  };
+  if (!input || typeof input !== "object" || Array.isArray(input)) return null;
+  return merge(DEFAULT_CONTENT, input) as SiteContent;
 }
 
-export function blankProperty(): Property {
-  return {
-    id: `p-${Date.now()}`,
-    status: "sample",
-    neighborhoodZh: "",
-    neighborhoodEn: "",
-    titleZh: "新案例",
-    titleEn: "New study",
-    price: "",
-    beds: "",
-    baths: "",
-    sqft: "",
-    summaryZh: "",
-    summaryEn: "",
-    storyZh: "",
-    storyEn: "",
-    readZh: "",
-    readEn: "",
-    image: "/images/landscape/aerial-estate-pool-hot-tub-driveway.webp",
-  };
-}
-
-export function blankGarden(): Garden {
-  return {
-    id: `g-${Date.now()}`,
-    categoryZh: "",
-    categoryEn: "",
-    titleZh: "新作品",
-    titleEn: "New work",
-    summaryZh: "",
-    summaryEn: "",
-    storyZh: "",
-    storyEn: "",
-    before: "",
-    after: "/images/landscape/sunset-pool-spillover-spa-lounge.webp",
-    mode: "before",
-  };
+function merge(base: unknown, value: unknown): unknown {
+  if (Array.isArray(base)) {
+    if (!Array.isArray(value)) return base;
+    const tmpl = base[0];
+    return tmpl === undefined ? value : value.map((v, i) => merge(base[i] ?? tmpl, v));
+  }
+  if (base && typeof base === "object") {
+    if (!value || typeof value !== "object" || Array.isArray(value)) return base;
+    const out: Record<string, unknown> = {};
+    for (const key of Object.keys(base)) {
+      out[key] = merge((base as Record<string, unknown>)[key], (value as Record<string, unknown>)[key]);
+    }
+    return out;
+  }
+  return typeof value === typeof base ? value : base;
 }
 
 export const THEME_BOOT = `(function(){try{var t=localStorage.getItem("${THEME_KEY}");var l=localStorage.getItem("${LANG_KEY}");var theme=t==="light"?"light":"dark";var lang=l==="zh"?"zh":"en";var h=document.documentElement;h.setAttribute("data-theme",theme);h.setAttribute("data-lang",lang);h.lang=lang;var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute("content",theme==="dark"?"#12110f":"#f3efe7");}catch(e){}})();`;
