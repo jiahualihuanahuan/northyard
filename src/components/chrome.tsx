@@ -6,10 +6,9 @@ import { cn } from "@/lib/cn";
 import { useSite } from "@/lib/site";
 
 const LINKS = [
-  { id: "synergy", zh: "方法", en: "Approach" },
-  { id: "estate", zh: "房产", en: "Homes" },
-  { id: "garden", zh: "庭院", en: "Gardens" },
-  { id: "about", zh: "关于", en: "About" },
+  { id: "garden", zh: "景观作品", en: "Landscape" },
+  { id: "about", zh: "设计师", en: "Studio" },
+  { id: "estate", zh: "房产", en: "Real estate" },
 ] as const;
 
 export function Nav({ overlay = false }: { overlay?: boolean }) {

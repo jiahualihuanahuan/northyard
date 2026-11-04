@@ -81,208 +81,192 @@ export type Inquiry = {
   note: string;
 };
 
-export const CONTENT_KEY = "northyard-content-v1";
+export const CONTENT_KEY = "northyard-content-v2";
 export const INQUIRY_KEY = "northyard-inquiries-v1";
 export const THEME_KEY = "northyard-theme";
 export const LANG_KEY = "northyard-lang";
 
+const IMG = "/images/landscape";
+
 export const DEFAULT_CONTENT: SiteContent = {
   brandZh: "Jenny Bu",
   brandEn: "Jenny Bu",
-  taglineZh: "空间美学与资产价值",
-  taglineEn: "Spatial aesthetics and property value",
+  taglineZh: "景观设计 · 户外生活空间",
+  taglineEn: "Landscape architecture and outdoor living",
   principal: "Jenny Bu",
-  roleZh: "主理人",
-  roleEn: "Principal",
+  roleZh: "景观设计主理人",
+  roleEn: "Principal, landscape design",
   email: "",
   phone: "",
   cityZh: "多伦多 · 约克区",
   cityEn: "Toronto · York Region",
   aboutZh:
-    "看房的时候，我们同时在看这块地以后的样子。朝向、树、侧院和门前那三米，往往比房间数更决定一栋房子值不值得留下来。\n\nJenny Bu 把地产经纪和景观设计放在同一次判断里。买入前，评估改造潜力；挂牌前，用克制的外立面和庭院整理第一眼；入住后，把户外做成真正会用的房间。",
+    "一块地真正的价值，在它被走进、被坐下、被点亮的样子。泳池、露台、户外厨房、入口和种植，应该是一套连贯的设计，而不是一件件堆上去的东西。\n\nJenny Bu 的工作从景观开始：勘测、概念、材料与灯光，一直到落地。需要时，同一双眼睛也会在买房或挂牌前，帮你读懂一块地的潜力。",
   aboutEn:
-    "A showing is also a reading of the land. Orientation, trees, the side yard, and the first three metres often matter more than the room count.\n\nJenny Bu keeps real estate and landscape in the same judgment. Before a purchase, the potential. Before a listing, a quieter facade and garden. After you arrive, an outdoor room you will actually use.",
+    "The real value of a property is how its land is walked, sat in, and lit. Pools, terraces, outdoor kitchens, entries, and planting should read as one design — not a list of features added one at a time.\n\nJenny Bu's work starts with the landscape: survey, concept, materials, and lighting, through to the built garden. When it helps, the same eye can also read a lot's potential before a purchase or a listing.",
   credentials: [
-    { zh: "地产顾问 · 大多伦多", en: "Real estate advisory · Greater Toronto" },
-    { zh: "景观概念与庭院落地", en: "Landscape concept through to the garden" },
-    { zh: "市区、约克区与湖岸", en: "City, York Region, and the shore" },
+    { zh: "景观概念、方案与落地", en: "Landscape concept, design, and build-out" },
+    { zh: "泳池庭院、露台与户外厨房", en: "Pool courts, terraces, and outdoor kitchens" },
+    { zh: "地产顾问 · 大多伦多（辅助服务）", en: "Real estate advisory · Greater Toronto (secondary)" },
   ],
   properties: [
     {
-      id: "maple",
+      id: "estate-grounds",
       status: "sample",
-      neighborhoodZh: "玫瑰谷",
-      neighborhoodEn: "Rosedale",
-      titleZh: "石基与枫",
-      titleEn: "Stone, and the maple",
-      price: "$3.4M",
-      beds: "4",
-      baths: "4",
-      sqft: "3,450",
-      summaryZh: "老枫压住了门廊的光线。这栋房子的安静，是树给的。",
-      summaryEn: "An old maple holds the porch in shade. The quiet here belongs to the tree.",
+      neighborhoodZh: "示范",
+      neighborhoodEn: "Study",
+      titleZh: "从地块读一栋房子",
+      titleEn: "Reading a house through its grounds",
+      price: "",
+      beds: "",
+      baths: "",
+      sqft: "",
+      summaryZh: "车道、泳池、露台和绿篱的关系，决定这块地还能长成什么。",
+      summaryEn: "How the drive, pool, terraces, and hedges relate decides what the land can still become.",
       storyZh:
-        "石基、红砖、黑色窗框，是这条街上熟悉的语法。真正稀缺的是那棵枫还在，而且长得健康。进门之前，视线已经被院子压低了一寸，房子因此不吵。",
+        "买入之前，先看地：车道如何引向门口，泳池和露台占了哪里的阳光，绿篱留出了多少私密。这些比房间数更难改，也更值得提前看清。",
       storyEn:
-        "Stone base, brick, black sash — the grammar of this street. What is scarce is the maple, still here and still well. The garden lowers the eye before the door, and the house stays quiet.",
-      readZh:
-        "侧院还有一跨，早餐露台不必去占前庭。枫树留下。灯和台阶可以收一收，让门成为画面的中心，而不是被冬青挡住。",
-      readEn:
-        "The side yard can take a breakfast terrace without spending the front garden. Keep the maple. Edit the light and the steps so the door, not the shrubs, holds the picture.",
-      image: "/images/prop-maple.jpg",
+        "Before a purchase, read the land: how the drive leads to the door, where the pool and terraces take the sun, how much privacy the hedges hold. These are harder to change than rooms, and worth seeing early.",
+      readZh: "示范内容，可在工作室替换为你自己的房源。",
+      readEn: "A sample study — replace it with your own listings in the studio.",
+      image: `${IMG}/aerial-estate-pool-hot-tub-driveway.webp`,
     },
     {
-      id: "birch",
+      id: "first-glance",
       status: "sample",
-      neighborhoodZh: "林谷",
-      neighborhoodEn: "Ravine",
-      titleZh: "桦木院子",
-      titleEn: "A court of birch",
-      price: "$4.1M",
-      beds: "4",
-      baths: "3",
-      sqft: "3,860",
-      summaryZh: "玻璃拉开之后，房间是院子的延伸。湿石板把天光接进屋里。",
-      summaryEn: "With the glass open, the room continues into the court. Wet stone brings the sky inside.",
+      neighborhoodZh: "示范",
+      neighborhoodEn: "Study",
+      titleZh: "挂牌前的第一眼",
+      titleEn: "The first glance before a listing",
+      price: "",
+      beds: "",
+      baths: "",
+      sqft: "",
+      summaryZh: "入口、台阶和灯光，是买家记住一栋房子的第一个画面。",
+      summaryEn: "The entry, the steps, and the light are the first picture a buyer keeps.",
       storyZh:
-        "这不是一栋靠立面说话的房子。价值在室内和白桦之间那条没有门槛的线。雨天石板发暗，屋子反而更亮。买它，是买一种整天都在院子边上的生活。",
+        "挂牌之前，把入口整理清楚：石柱和台阶有秩序，种植池收住边界，灯光把路径和树轻轻点亮。",
       storyEn:
-        "This house does not sell itself from the street. The value is the line between the room and the birch, with no threshold in it. Rain darkens the stone and the interior gets brighter. You are buying a day spent at the edge of the garden.",
-      readZh:
-        "白桦是资产，不是装饰。排水顺着石板走，不要再铺一块会积水的草坪。石头留着，植物只补底层，别跟树争高度。",
-      readEn:
-        "The birch is an asset, not a decoration. Let water run with the stone — do not add a lawn that holds it. Keep the rock. Plant low, and do not compete with the trees.",
-      image: "/images/prop-birch.jpg",
-    },
-    {
-      id: "lake",
-      status: "sample",
-      neighborhoodZh: "湖岸",
-      neighborhoodEn: "The Shore",
-      titleZh: "向光的台阶",
-      titleEn: "Steps toward the light",
-      price: "$5.2M",
-      beds: "4",
-      baths: "4",
-      sqft: "4,120",
-      summaryZh: "露台比客厅更像这栋房子的中心。草比草坪更适合这里的风。",
-      summaryEn: "The terrace is the real living room. Grasses belong here more than a lawn.",
-      storyZh:
-        "傍晚的光先落在石灰石上，再进室内。高草挡住了风，湖还在视线里。这种房子不需要更多房间，它需要你愿意把晚上过在外面。",
-      storyEn:
-        "Evening light hits the limestone before it enters the house. The grasses take the wind and leave the water in view. It does not need more rooms. It needs evenings spent outside.",
-      readZh:
-        "坡地不必修成平整草坪。高草是这栋房子的围墙，也是它的安静。台阶的比例已经对了，别再用栏杆把湖切碎。",
-      readEn:
-        "Do not grade this slope into a lawn. The grasses are the wall, and the quiet. The steps are already the right proportion — a railing would only cut up the lake.",
-      image: "/images/prop-lake.jpg",
-    },
-    {
-      id: "orchard",
-      status: "sample",
-      neighborhoodZh: "北镇",
-      neighborhoodEn: "North lot",
-      titleZh: "果园入夜",
-      titleEn: "The orchard at dusk",
-      price: "$2.6M",
-      beds: "4",
-      baths: "4",
-      sqft: "3,640",
-      summaryZh: "更大的地，更慢的晚上。价值在天空，和那排还年轻的树。",
-      summaryEn: "A wider lot, a slower evening. The value is the sky, and a row of young trees.",
-      storyZh:
-        "约克区这种地块，房子往往盖得比院子诚实。这里反过来：黑屋顶和暖窗只是果园的背景。白天是树，天黑以后才是家。",
-      storyEn:
-        "On a York Region lot the house is often louder than the land. Here it is the other way: the black roof and the warm windows are a backdrop for the orchard. Day belongs to the trees. Night is when it becomes a house.",
-      readZh:
-        "前场可以再收一点，让门廊成为画面的中心。果树留下。夜灯只要暖，不要亮。车道别再加宽，草甸比更多铺装值钱。",
-      readEn:
-        "Pull the front field in slightly so the porch can hold the picture. Keep the fruit trees. Lamps should be warm, not bright. Do not widen the drive — the meadow is worth more than more paving.",
-      image: "/images/prop-orchard.jpg",
+        "Before a listing, make the entry clear: ordered pillars and steps, planters that hold the edges, and light that gently picks out the path and the trees.",
+      readZh: "示范内容，可在工作室替换为你自己的房源。",
+      readEn: "A sample study — replace it with your own listings in the studio.",
+      image: `${IMG}/front-entry-stone-pillars-lighting.webp`,
     },
   ],
   gardens: [
     {
-      id: "court",
-      categoryZh: "现代后院",
+      id: "sunset-pool",
+      categoryZh: "泳池庭院",
+      categoryEn: "Pool court",
+      titleZh: "日落时的泳池",
+      titleEn: "The pool at sunset",
+      summaryZh: "带溢流水疗池的长方形泳池、躺椅、户外起居区和观赏草。",
+      summaryEn: "A lit rectangular pool with a spillover spa, loungers, an outdoor lounge, and ornamental grasses.",
+      storyZh:
+        "泳池、水疗池和起居区沿着同一条轴线展开，从屋内一路延伸到花园。观赏草软化了铺装的边缘，灯光让水面在天黑后成为主角。",
+      storyEn:
+        "Pool, spa, and lounge sit on one line that carries the eye from the house into the garden. Ornamental grasses soften the paving, and lighting lets the water take over after dark.",
+      before: "",
+      after: `${IMG}/sunset-pool-spillover-spa-lounge.webp`,
+      mode: "viz",
+    },
+    {
+      id: "fire-pit-yard",
+      categoryZh: "后院",
       categoryEn: "Rear garden",
-      titleZh: "留下那棵枫",
-      titleEn: "Keep the maple",
-      summaryZh: "同一栋房子，同一棵树。变的是人怎么走出来吃饭。",
-      summaryEn: "Same house, same tree. What changed is how you walk out to dinner.",
+      titleZh: "火塘与户外厨房",
+      titleEn: "Fire pit and outdoor kitchen",
+      summaryZh: "火塘、红色坐垫藤椅、石砌烧烤厨房、深色廊架、汀步与多年生花境。",
+      summaryEn: "A fire pit with red-cushioned wicker seating, a stone BBQ kitchen, a dark pergola, stepping stones, lawn, and perennial beds.",
       storyZh:
-        "改造前是一块用旧的草坪、窄木台和一只塑料椅。枫树本来就在对的位置。我们留下它，把用餐移到石灰石上，用绿篱换掉木栅栏。边界还在，只是软了。",
+        "火塘把人聚在一起，石砌厨房和廊架定义了用餐的一侧。汀步穿过草坪，多年生花境把整个后院的边界收得柔和。",
       storyEn:
-        "Before: a tired lawn, a narrow deck, a plastic chair. The maple was already in the right place. We kept it, moved dinner onto limestone, and traded the fence for hedge. The boundary is still there. It is simply softer.",
-      before: "/images/court-before.jpg",
-      after: "/images/court-after.jpg",
-      mode: "before",
+        "The fire pit gathers people; the stone kitchen and pergola define the dining side. Stepping stones cross the lawn, and perennial beds soften the edges of the whole yard.",
+      before: "",
+      after: `${IMG}/backyard-fire-pit-outdoor-kitchen.webp`,
+      mode: "viz",
     },
     {
-      id: "front",
-      categoryZh: "极简前院",
-      categoryEn: "Front court",
-      titleZh: "三棵树的前院",
-      titleEn: "Three trees, one door",
-      summaryZh: "门不要被灌木吃掉。路径要直，材料要少。",
-      summaryEn: "The door should not be eaten by shrubs. A straight path. Fewer materials.",
+      id: "pergola-kitchen",
+      categoryZh: "户外厨房",
+      categoryEn: "Outdoor kitchen",
+      titleZh: "廊架下的吧台",
+      titleEn: "A bar under the pergola",
+      summaryZh: "木结构廊架下的户外厨房，花岗岩吧台、高脚凳、灯笼和绣球花池。",
+      summaryEn: "An outdoor kitchen under a timber pergola, with a granite bar, stools, lanterns, and a hydrangea planter.",
       storyZh:
-        "客人下车的十秒里，裂开的混凝土和生锈的信箱会先把房子说旧。同一扇门，换成砾石、黄杨和三棵小树之后，地址变得清楚。这是挂牌前最值得做的三米。",
+        "廊架给厨房一个屋顶，也给夜晚一个尺度。花岗岩吧台让做饭的人和坐着的人面对面，绣球和灯笼让这里像一个真正的房间。",
       storyEn:
-        "In the ten seconds after someone steps out of the car, cracked concrete and a rusted box tell the house it is tired. The same door, with gravel, boxwood, and three small trees, makes the address clear. Those three metres are the ones worth doing before a listing.",
-      before: "/images/front-before.jpg",
-      after: "/images/front-after.jpg",
-      mode: "before",
+        "The pergola gives the kitchen a roof and the evening a scale. The granite bar puts the cook and the guests face to face; hydrangeas and lanterns make it feel like a real room.",
+      before: "",
+      after: `${IMG}/outdoor-kitchen-timber-pergola.webp`,
+      mode: "viz",
     },
     {
-      id: "terrace",
-      categoryZh: "户外起居",
-      categoryEn: "Outdoor room",
-      titleZh: "从效果到晚上",
-      titleEn: "From drawing to dusk",
-      summaryZh: "一边把尺度讲明白，一边把天黑之后的温度做对。",
-      summaryEn: "One side explains the scale. The other gets the temperature of night right.",
+      id: "waterfall-pool-night",
+      categoryZh: "夜景",
+      categoryEn: "Night landscape",
+      titleZh: "岩石瀑布与圆形泳池",
+      titleEn: "Round pool and rock waterfall",
+      summaryZh: "夜间鸟瞰：圆形泳池与岩石瀑布、带灯光的弧形铺装露台、推杆果岭和红色遮阳伞。",
+      summaryEn: "A night aerial: a round pool with a rock waterfall, curved lit paver patios, a putting green, and red umbrellas.",
       storyZh:
-        "石灰石坐席、蕨和绣球。效果图用来跟主人沟通比例，实景用来证明灯是暖的、植物是活的。好看的院子如果不能在晚上坐下来，就还没有完成。",
+        "弧形的露台围绕圆形泳池展开，岩石瀑布成为视觉焦点。夜间照明把各个区域串成一条可以走的路线。",
       storyEn:
-        "Limestone seating, ferns, hydrangea. The visualization is how we agree on proportion. The photograph is proof the light is warm and the plants are alive. A garden you cannot sit in after dark is not finished.",
-      before: "/images/terrace-viz.jpg",
-      after: "/images/terrace.jpg",
+        "Curved patios wrap the round pool, with the rock waterfall as the focal point. Night lighting ties each area into a route you can walk.",
+      before: "",
+      after: `${IMG}/night-aerial-pool-waterfall-putting-green.webp`,
+      mode: "viz",
+    },
+    {
+      id: "estate-aerial",
+      categoryZh: "整体规划",
+      categoryEn: "Master plan",
+      titleZh: "从车道到泳池",
+      titleEn: "From the drive to the pool",
+      summaryZh: "白天鸟瞰：长方形泳池与按摩池、铺装露台、带花坛的弧形车道和绿篱。",
+      summaryEn: "A daytime aerial: a rectangular pool and hot tub, paver patios, a curved driveway with a flower bed, and hedges.",
+      storyZh:
+        "整块地作为一个整体来规划：弧形车道和花坛安排到达，绿篱划出私密，泳池和露台占据后院最好的阳光。",
+      storyEn:
+        "The whole property planned as one: a curved drive and flower bed shape the arrival, hedges set the privacy, and the pool and patios take the best sun in the rear.",
+      before: "",
+      after: `${IMG}/aerial-estate-pool-hot-tub-driveway.webp`,
+      mode: "viz",
+    },
+    {
+      id: "front-entry",
+      categoryZh: "入口",
+      categoryEn: "Front entry",
+      titleZh: "被点亮的入口",
+      titleEn: "A lit front entry",
+      summaryZh: "黄昏的入口：石柱与台阶、抬高种植池、上照的树和铺装步道。",
+      summaryEn: "An entry at golden hour: stone pillars and steps, raised planters, uplit trees, and a paver walkway.",
+      storyZh:
+        "入口是一栋房子的第一句话。石柱和台阶给出秩序，种植池收住边界，上照的树让到家的路在天黑后依然清楚。",
+      storyEn:
+        "The entry is a house's first sentence. Pillars and steps give it order, planters hold the edges, and uplit trees keep the way home clear after dark.",
+      before: "",
+      after: `${IMG}/front-entry-stone-pillars-lighting.webp`,
       mode: "viz",
     },
   ],
   neighborhoods: [
     {
-      id: "rosedale",
-      nameZh: "玫瑰谷",
-      nameEn: "Rosedale",
-      noteZh: "老树、石材、安静的前院",
-      noteEn: "Old trees, stone, a quiet front garden",
-      image: "/images/prop-maple.jpg",
+      id: "toronto",
+      nameZh: "多伦多",
+      nameEn: "Toronto",
+      noteZh: "城市后院、露台与入口",
+      noteEn: "City rear gardens, terraces, and entries",
+      image: `${IMG}/backyard-fire-pit-outdoor-kitchen.webp`,
     },
     {
-      id: "ravine",
-      nameZh: "林谷",
-      nameEn: "Ravine",
-      noteZh: "白桦、天光、室内外连成一片",
-      noteEn: "Birch, sky, room and garden as one",
-      image: "/images/prop-birch.jpg",
-    },
-    {
-      id: "shore",
-      nameZh: "湖岸",
-      nameEn: "The Shore",
-      noteZh: "风、高草、朝向水面的露台",
-      noteEn: "Wind, grasses, a terrace toward the water",
-      image: "/images/prop-lake.jpg",
-    },
-    {
-      id: "north",
-      nameZh: "北镇",
-      nameEn: "North lot",
-      noteZh: "更大的地块，果树和夜色",
-      noteEn: "A wider lot, fruit trees, and night",
-      image: "/images/prop-orchard.jpg",
+      id: "york",
+      nameZh: "约克区",
+      nameEn: "York Region",
+      noteZh: "更大的地块、泳池庭院与整体规划",
+      noteEn: "Larger lots, pool courts, and master plans",
+      image: `${IMG}/aerial-estate-pool-hot-tub-driveway.webp`,
     },
   ],
 };
@@ -326,7 +310,7 @@ export function sanitizeContent(input: unknown): SiteContent | null {
             storyEn: str(p.storyEn),
             readZh: str(p.readZh),
             readEn: str(p.readEn),
-            image: str(p.image, "/images/materials.jpg"),
+            image: str(p.image, "/images/landscape/aerial-estate-pool-hot-tub-driveway.webp"),
           };
           return prop;
         })
@@ -348,7 +332,7 @@ export function sanitizeContent(input: unknown): SiteContent | null {
             storyZh: str(g.storyZh),
             storyEn: str(g.storyEn),
             before: str(g.before),
-            after: str(g.after, "/images/hero-garden.jpg"),
+            after: str(g.after, "/images/landscape/sunset-pool-spillover-spa-lounge.webp"),
             mode: asMode(g.mode),
           };
           return garden;
@@ -366,7 +350,7 @@ export function sanitizeContent(input: unknown): SiteContent | null {
             nameEn: str(n.nameEn),
             noteZh: str(n.noteZh),
             noteEn: str(n.noteEn),
-            image: str(n.image, "/images/street.jpg"),
+            image: str(n.image, "/images/landscape/backyard-fire-pit-outdoor-kitchen.webp"),
           };
           return hood;
         })
@@ -421,7 +405,7 @@ export function blankProperty(): Property {
     storyEn: "",
     readZh: "",
     readEn: "",
-    image: "/images/materials.jpg",
+    image: "/images/landscape/aerial-estate-pool-hot-tub-driveway.webp",
   };
 }
 
@@ -437,7 +421,7 @@ export function blankGarden(): Garden {
     storyZh: "",
     storyEn: "",
     before: "",
-    after: "/images/hero-garden.jpg",
+    after: "/images/landscape/sunset-pool-spillover-spa-lounge.webp",
     mode: "before",
   };
 }

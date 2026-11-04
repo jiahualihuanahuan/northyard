@@ -13,10 +13,10 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Jenny Bu" },
+      { title: "Jenny Bu — Landscape Architecture & Outdoor Living" },
       {
         name: "description",
-        content: "Jenny Bu — real estate and landscape. 地产与景观，空间美学与资产价值。",
+        content: "Jenny Bu — landscape architecture in Toronto and York Region: pool courts, terraces, outdoor kitchens, entries, and lighting. Real estate advisory as a secondary service. 景观设计与户外生活空间。",
       },
       { name: "theme-color", content: "#12110f" },
     ],
