@@ -12,8 +12,6 @@ export type Work = {
   body: T;
 };
 
-export type Item = { title: T; body: T };
-
 export type SiteContent = {
   brandZh: string;
   brandEn: string;
@@ -25,14 +23,12 @@ export type SiteContent = {
   approach: { image: string; alt: T; headline: T; body: T };
   workSection: { headline: T };
   work: Work[];
-  services: { headline: T; items: Item[] };
-  process: { headline: T; steps: Item[] };
   advisory: { enabled: boolean; image: string; alt: T; headline: T; body: T; cta: T };
   contactCta: { image: string; alt: T; headline: T; body: T; cta: T };
   contactPage: { image: string; intro: T };
 };
 
-export const CONTENT_KEY = "northyard-content-v3";
+export const CONTENT_KEY = "northyard-content-v4";
 export const THEME_KEY = "northyard-theme";
 export const LANG_KEY = "northyard-lang";
 export const SITE_URL = "https://jennybu.ca";
@@ -49,28 +45,28 @@ export const IMAGES = {
 
 const ALT = {
   sunset: {
-    en: "Concept rendering: a rectangular pool with a spillover spa and lounge deck at sunset",
-    zh: "设计效果图：日落时的长方形泳池、溢流按摩池与躺椅平台",
+    en: "A rectangular pool with a spillover spa and lounge deck at sunset",
+    zh: "日落时的长方形泳池、溢流按摩池与躺椅平台",
   },
   firePit: {
-    en: "Concept rendering: a backyard terrace with a sunken fire pit and outdoor kitchen",
-    zh: "设计效果图：带下沉火炉与户外厨房的后院露台",
+    en: "A backyard terrace with a sunken fire pit and outdoor kitchen",
+    zh: "带下沉火炉与户外厨房的后院露台",
   },
   pergola: {
-    en: "Concept rendering: an outdoor kitchen and bar beneath a timber pergola",
-    zh: "设计效果图：木构廊架下的户外厨房与吧台",
+    en: "An outdoor kitchen and bar beneath a timber pergola",
+    zh: "木构廊架下的户外厨房与吧台",
   },
   nightPool: {
-    en: "Concept rendering: night aerial view of a rounded pool, rock waterfall and putting green",
-    zh: "设计效果图：夜晚俯瞰圆形泳池、岩石瀑布与推杆果岭",
+    en: "Night aerial view of a rounded pool, rock waterfall and putting green",
+    zh: "夜晚俯瞰圆形泳池、岩石瀑布与推杆果岭",
   },
   estate: {
-    en: "Concept rendering: aerial view of a home from driveway to terrace, hot tub and pool",
-    zh: "设计效果图：俯瞰住宅，从车道到露台、热水池与泳池",
+    en: "Aerial view of a home from driveway to terrace, hot tub and pool",
+    zh: "俯瞰住宅，从车道到露台、热水池与泳池",
   },
   entry: {
-    en: "Concept rendering: a lit front entry with stone pillars and layered planting",
-    zh: "设计效果图：石柱、层次种植与灯光点亮的前门入口",
+    en: "A lit front entry with stone pillars and layered planting",
+    zh: "石柱、层次种植与灯光点亮的前门入口",
   },
 } satisfies Record<keyof typeof IMAGES, T>;
 
@@ -101,7 +97,7 @@ export const DEFAULT_CONTENT: SiteContent = {
       zh: "车道、入口、露台、泳池是一条连贯的动线，而不是一件件堆上去的设施。我们先规划人怎么走、在哪里停留、从街口到后院怎样被看见，再把这个思路贯穿到材料、种植和灯光里。",
     },
   },
-  workSection: { headline: { en: "Selected work (concept designs)", zh: "精选作品（设计方案）" } },
+  workSection: { headline: { en: "Selected work: completed projects", zh: "精选作品 · 已完工项目" } },
   work: [
     {
       id: "sunset-pool",
@@ -164,54 +160,6 @@ export const DEFAULT_CONTENT: SiteContent = {
       },
     },
   ],
-  services: {
-    headline: { en: "What we design.", zh: "我们设计什么" },
-    items: [
-      {
-        title: { en: "Pools & water", zh: "泳池与水景" },
-        body: { en: "Pools, spas and water features set into the landscape.", zh: "融入景观的泳池、按摩池与水景。" },
-      },
-      {
-        title: { en: "Terraces & outdoor kitchens", zh: "露台与户外厨房" },
-        body: { en: "Places to cook, eat and gather outside.", zh: "在户外烹饪、用餐和相聚的地方。" },
-      },
-      {
-        title: { en: "Entries & driveways", zh: "入口与车道" },
-        body: { en: "Arrival sequences with lasting curb appeal.", zh: "经得起时间的到达动线与门面。" },
-      },
-      {
-        title: { en: "Planting & lighting", zh: "种植与灯光" },
-        body: {
-          en: "The layers that make a yard feel finished, day and night.",
-          zh: "让庭院无论白天黑夜都显得完整的那几层。",
-        },
-      },
-    ],
-  },
-  process: {
-    headline: { en: "How it works.", zh: "合作流程" },
-    steps: [
-      { title: { en: "Site visit", zh: "现场勘察" }, body: { en: "We walk the property and listen.", zh: "走一遍场地，听你的想法。" } },
-      {
-        title: { en: "Concept", zh: "概念方案" },
-        body: { en: "A layout and visual direction for the whole site.", zh: "整块地的布局与视觉方向。" },
-      },
-      {
-        title: { en: "Design", zh: "深化设计" },
-        body: { en: "Materials, planting and lighting resolved.", zh: "材料、种植与灯光逐一确定。" },
-      },
-      // TODO(owner): PENDING CONFIRMATION — does Jenny Bu offer build support /
-      // construction coordination? Kept per owner instruction; edit or remove once confirmed.
-      // Do not describe any work as "built" or "completed".
-      {
-        title: { en: "Build support", zh: "施工配合" },
-        body: {
-          en: "Working alongside your contractor through construction.",
-          zh: "在施工阶段与你的施工方配合。",
-        },
-      },
-    ],
-  },
   advisory: {
     enabled: true,
     image: IMAGES.entry,

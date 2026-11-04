@@ -7,8 +7,8 @@ import { useSite } from "@/lib/site";
 
 const LINKS = [
   { id: "work", zh: "作品", en: "Work" },
-  { id: "services", zh: "服务", en: "Services" },
-  { id: "process", zh: "流程", en: "Process" },
+  { id: "approach", zh: "理念", en: "Approach" },
+  { id: "advisory", zh: "地产顾问", en: "Advisory" },
 ] as const;
 
 export function Nav({ overlay = false }: { overlay?: boolean }) {
@@ -176,7 +176,7 @@ export function Footer() {
       </div>
       <p className="mt-12 text-sm text-muted">
         © {year} {content.brandEn}.{" "}
-        {tx("作品图片均为设计效果图。", "Work shown as concept renderings.")}
+        {tx("展示作品均为已完工项目。", "All projects shown are completed.")}
       </p>
     </footer>
   );

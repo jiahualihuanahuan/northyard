@@ -25,8 +25,6 @@ export function HomePage() {
       <Hero />
       <Approach />
       <SelectedWork />
-      <Services />
-      <Process />
       <Advisory />
       <ContactCta />
     </Page>
@@ -96,7 +94,7 @@ function SelectedWork() {
           <article key={item.id}>
             <Link to="/work/$id" params={{ id: item.id }} className="group block">
               <Frame src={item.image} alt={t(item.alt)} className="aspect-3/2" />
-              <p className="eyebrow mt-5 text-muted">{tx("设计方案", "Concept design")}</p>
+              <p className="eyebrow mt-5 text-muted">{tx("已完工项目", "Completed project")}</p>
               <h3 className="display mt-3 text-3xl">{t(item.title)}</h3>
               <p className="mt-3 text-sm leading-6 text-muted">{t(item.body)}</p>
               <span className="mt-4 inline-flex min-h-11 items-center gap-2 text-sm">
@@ -107,41 +105,6 @@ function SelectedWork() {
           </article>
         ))}
       </div>
-    </section>
-  );
-}
-
-function Services() {
-  const { content, t } = useSite();
-  return (
-    <section id="services" className={`border-t border-line py-24 md:py-32 ${PAD}`}>
-      <h2 className="display text-4xl md:text-6xl">{t(content.services.headline)}</h2>
-      <ul className="mt-16 grid gap-10 md:grid-cols-2 lg:grid-cols-4">
-        {content.services.items.map((item, i) => (
-          <li key={i} className="border-t border-line pt-6">
-            <h3 className="display text-2xl">{t(item.title)}</h3>
-            <p className="mt-3 text-sm leading-6 text-muted">{t(item.body)}</p>
-          </li>
-        ))}
-      </ul>
-    </section>
-  );
-}
-
-function Process() {
-  const { content, t } = useSite();
-  return (
-    <section id="process" className={`border-t border-line py-24 md:py-32 ${PAD}`}>
-      <h2 className="display text-4xl md:text-6xl">{t(content.process.headline)}</h2>
-      <ol className="mt-16 grid gap-10 md:grid-cols-4">
-        {content.process.steps.map((step, i) => (
-          <li key={i}>
-            <p className="display text-5xl text-accent">{String(i + 1).padStart(2, "0")}</p>
-            <h3 className="mt-4 text-lg">{t(step.title)}</h3>
-            <p className="mt-3 text-sm leading-6 text-muted">{t(step.body)}</p>
-          </li>
-        ))}
-      </ol>
     </section>
   );
 }

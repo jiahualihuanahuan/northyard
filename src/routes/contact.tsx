@@ -225,7 +225,7 @@ function ContactPage() {
         </div>
         <Frame
           src={content.contactPage.image}
-          alt={tx("设计效果图：木构廊架下的户外厨房", "Concept rendering: outdoor kitchen beneath a timber pergola")}
+          alt={tx("木构廊架下的户外厨房", "An outdoor kitchen beneath a timber pergola")}
           className="aspect-4/5 md:col-span-5"
         />
       </main>

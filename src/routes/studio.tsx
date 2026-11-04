@@ -116,7 +116,7 @@ function StudioPage() {
           </div>
         </Section>
 
-        <Section title={tx("作品（设计方案）", "Work (concept designs)")}>
+        <Section title={tx("作品（已完工项目）", "Work (completed projects)")}>
           <div className="flex flex-col gap-12">
             {content.work.map((item, index) => (
               <div key={item.id} className="grid gap-6 border-t border-line pt-6 md:grid-cols-2">
@@ -131,8 +131,8 @@ function StudioPage() {
         <Section title={tx("全部文案（JSON，高级）", "All copy (JSON, advanced)")}>
           <p className="text-sm leading-6 text-muted">
             {tx(
-              "首屏、理念、服务、流程、地产顾问、联系引导的中英文都在这里。改完点“应用”。",
-              "Hero, approach, services, process, advisory and contact copy live here. Edit, then Apply.",
+              "首屏、理念、地产顾问、联系引导的中英文都在这里。改完点“应用”。",
+              "Hero, approach, advisory and contact copy live here. Edit, then Apply.",
             )}
           </p>
           <textarea

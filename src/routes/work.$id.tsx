@@ -53,7 +53,7 @@ function WorkPage() {
         <Frame src={item.image} alt={t(item.alt)} className="case-hero" priority />
         <section className="grid gap-8 px-5 py-20 md:grid-cols-12 md:px-8 lg:px-12">
           <div className="md:col-span-6">
-            <p className="eyebrow text-muted">{tx("设计方案", "Concept design")}</p>
+            <p className="eyebrow text-muted">{tx("已完工项目", "Completed project")}</p>
             <h1 className="display mt-4 text-5xl md:text-6xl">{t(item.title)}</h1>
           </div>
           <div className="md:col-span-5 md:col-start-8">
