@@ -42,6 +42,8 @@ export const Route = createFileRoute("/contact")({
  * the owner must click "Activate Form" once before messages are delivered.
  * If the request fails, the visitor is offered a prefilled mailto: fallback.
  */
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 function endpoint(email: string) {
   return `https://formsubmit.co/ajax/${encodeURIComponent(email)}`;
 }
@@ -56,6 +58,8 @@ function ContactPage() {
   const [notes, setNotes] = useState("");
   const [state, setState] = useState<"idle" | "sending" | "sent" | "failed">("idle");
   const [error, setError] = useState("");
+  const [reason, setReason] = useState("");
+  const [honey, setHoney] = useState("");
 
   const areaEn = AREAS.find((a) => a.id === area)?.label.en ?? area;
   const typeEn = TYPES.find((x) => x.id === type)?.label.en ?? type;
@@ -76,28 +80,65 @@ function ContactPage() {
       setError(tx("请留下姓名和联系方式。", "Please add your name and an email or phone number."));
       return;
     }
+    if (honey) return; // bot filled the honeypot
     setError("");
+    setReason("");
     setState("sending");
+    const result = await deliver({
+      name: name.trim(),
+      "email or phone": reach.trim(),
+      area: areaEn,
+      "project type": typeEn,
+      notes,
+      _subject: subject,
+      _template: "table",
+      _captcha: "false",
+      _honey: "",
+      ...(EMAIL_RE.test(reach.trim()) ? { _replyto: reach.trim() } : {}),
+    });
+    if (result.ok) {
+      setState("sent");
+    } else {
+      setReason(result.reason);
+      setState("failed");
+    }
+  }
+
+  async function deliver(payload: Record<string, string>): Promise<{ ok: true } | { ok: false; reason: string }> {
+    const controller = new AbortController();
+    const timer = window.setTimeout(() => controller.abort(), 20000);
     try {
       const res = await fetch(endpoint(content.email), {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({
-          name,
-          "email or phone": reach,
-          area: areaEn,
-          "project type": typeEn,
-          notes,
-          _subject: subject,
-          _template: "table",
-          _captcha: "false",
-          _honey: "",
-        }),
+        body: JSON.stringify(payload),
+        signal: controller.signal,
       });
-      const data = (await res.json().catch(() => ({}))) as { success?: string | boolean };
-      setState(res.ok && String(data.success) !== "false" ? "sent" : "failed");
-    } catch {
-      setState("failed");
+      const text = await res.text();
+      let data: { success?: unknown; message?: unknown } = {};
+      try {
+        data = JSON.parse(text) as typeof data;
+      } catch {
+        /* non-JSON (e.g. Cloudflare error page) */
+      }
+      // FormSubmit returns { success: "true" | "false", message }. Only an explicit true counts.
+      if (res.ok && (data.success === true || data.success === "true")) return { ok: true };
+      const message = typeof data.message === "string" ? data.message : "";
+      if (/activat/i.test(message)) {
+        return {
+          ok: false,
+          reason: tx("表单尚未激活（等待邮箱确认）。", "The form is awaiting activation by the site owner."),
+        };
+      }
+      return { ok: false, reason: message || `HTTP ${res.status}` };
+    } catch (err) {
+      const aborted = err instanceof DOMException && err.name === "AbortError";
+      return {
+        ok: false,
+        reason: aborted ? tx("邮件服务无响应。", "The mail service did not respond.") : tx("网络错误。", "Network error."),
+      };
+    } finally {
+      window.clearTimeout(timer);
     }
   }
 
@@ -146,10 +187,22 @@ function ContactPage() {
                 <span className="eyebrow text-muted">{tx("备注", "Notes")}</span>
                 <textarea className="field min-h-28 resize-y" value={notes} onChange={(e) => setNotes(e.target.value)} />
               </label>
+              <input
+                type="text"
+                name="_honey"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                className="hidden"
+                value={honey}
+                onChange={(e) => setHoney(e.target.value)}
+              />
               {error ? <p className="mt-4 text-sm text-accent">{error}</p> : null}
               {state === "failed" ? (
                 <p className="mt-4 text-sm leading-6 text-accent">
-                  {tx("发送没有成功。你可以", "That didn't go through. You can")}{" "}
+                  {tx("发送没有成功", "That didn't go through")}
+                  {reason ? ` (${reason})` : ""}
+                  {tx("。你可以", ". You can")}{" "}
                   <a href={mailto} className="underline">{tx("改用邮件发送", "send it by email instead")}</a>
                   {tx("，或直接致电。", ", or call us directly.")}
                 </p>
