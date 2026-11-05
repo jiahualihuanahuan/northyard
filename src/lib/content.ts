@@ -4,12 +4,21 @@ export type Theme = "light" | "dark";
 /** Bilingual text: `en` is the published market copy, `zh` is for the owner / Chinese toggle. */
 export type T = { en: string; zh: string };
 
+export type ServiceSlug =
+  | "landscape-design"
+  | "pools-and-water"
+  | "outdoor-living"
+  | "property-advisory";
+
 export type Work = {
   id: string;
   image: string;
   alt: T;
   title: T;
   body: T;
+  /** Longer, indexable project copy. Not edited in the studio field list. */
+  detail: T;
+  service: ServiceSlug;
 };
 
 export type SiteContent = {
@@ -108,6 +117,11 @@ export const DEFAULT_CONTENT: SiteContent = {
         en: "A spillover spa feeds the main pool, and the lounge deck faces west to catch the last of the light. Stone, water and planting are composed for the hours the yard is used most.",
         zh: "溢流式按摩池连接主泳池，躺椅平台朝西，留住最后的阳光。石材、水面与植物，为最常使用的时段而布局。",
       },
+      detail: {
+        en: "The spa sits just above the main water and spills across a weir, so the sound stays low and constant. The lounge deck faces west, on the same stone as the coping, which makes the water's edge the edge of the seating. Planting stays low toward the sunset so it does not cut the evening light, and gets denser at the sides where neighbours are closer. Lighting is on the water and the stone, not a wash across the whole yard.",
+        zh: "按摩池略高于主水面，水从堰口溢出，声音低而持续。朝西的躺椅平台与池沿同一石材，水面的边界就是座位的边界。西侧种植压低，不挡住傍晚的光；邻里一侧则更密。灯光落在水面和石材上，而不是把整个院子照亮。",
+      },
+      service: "pools-and-water",
     },
     {
       id: "fire-pit-yard",
@@ -118,6 +132,11 @@ export const DEFAULT_CONTENT: SiteContent = {
         en: "Cooking and gathering share one terrace, so the host is never cut off from the conversation. A sunken fire circle anchors the evening.",
         zh: "烹饪区与聚会区在同一露台上，主人做饭时也不脱离人群；下沉式火炉成为夜晚的中心。",
       },
+      detail: {
+        en: "The kitchen counter and the fire circle share one paving plane. The fire is sunken, so someone seated there is at eye level with the person standing at the grill. That is the layout: cooking stays inside the conversation instead of turning its back on it. Seating is close enough to the flame to matter on a cool evening, and far enough that smoke is not the centre of the meal.",
+        zh: "厨房台面与火炉在同一铺装平面上。火炉下沉，坐下的人与站在烤炉边的人视线齐平。做饭因此留在谈话里，而不是背对客人。座位离火足够近，凉夜里用得上，又不会让烟成为正餐的中心。",
+      },
+      service: "outdoor-living",
     },
     {
       id: "pergola-kitchen",
@@ -128,6 +147,11 @@ export const DEFAULT_CONTENT: SiteContent = {
         en: "A timber pergola frames the outdoor kitchen and bar, giving shade by day and a warm, defined room at night.",
         zh: "木质廊架围合出户外厨房与吧台，白天遮阳，夜晚成为一个温暖、有边界的“房间”。",
       },
+      detail: {
+        en: "The timber frame is sized as a room, not as decoration over a leftover patio. Posts set the corners of the kitchen and bar. By day the structure itself is the shade. At night the lights stay inside that footprint, so the yard beyond goes dark and the room reads clearly. The bar faces the seating, which keeps the person making drinks in the same space as everyone else.",
+        zh: "木构的尺寸按一个房间来定，而不是给剩余平台加个装饰。柱子落在厨房与吧台的角上。白天，结构本身就是遮阳。夜里灯光只留在这个轮廓里，外面的院子暗下去，房间才清楚。吧台面向座位，调酒的人与客人都在同一空间里。",
+      },
+      service: "outdoor-living",
     },
     {
       id: "waterfall-pool-night",
@@ -138,6 +162,11 @@ export const DEFAULT_CONTENT: SiteContent = {
         en: "A rounded pool with a rock waterfall sits beside a putting green. Lighting turns the whole yard into a night-time landscape.",
         zh: "圆形泳池配岩石瀑布，旁边是推杆果岭；灯光让整个后院在夜里成为另一种风景。",
       },
+      detail: {
+        en: "The pool is a simple round so the rock waterfall has a clear edge to meet. The putting green sits beside the water, not across a path, so play and swimming share one evening. Light is held to three places — the water, the stone and the green — rather than flooding the lot. From the house the waterfall is the night view; from the green, the water is the boundary of the game.",
+        zh: "泳池用简单的圆形，让岩石瀑布有一条清楚的边可接。推杆果岭紧挨水面，中间不隔一条路，打球和游泳是同一个晚上。灯光只留在三处：水面、石头、果岭，而不是照亮整块地。从房子看出去，瀑布是夜景；从果岭看，水是球场的边界。",
+      },
+      service: "pools-and-water",
     },
     {
       id: "estate-aerial",
@@ -148,6 +177,11 @@ export const DEFAULT_CONTENT: SiteContent = {
         en: "Seen from above, arrival, house, terrace, hot tub and pool read as one continuous plan.",
         zh: "从空中看，到达、住宅、露台、热水池和泳池是一张连续的平面。",
       },
+      detail: {
+        en: "From above the sequence is one axis: drive, house, terrace, hot tub, pool. Nothing is stranded in a corner of leftover lawn. That is the test of a whole-property plan. A feature that only makes sense in a close-up is usually in the wrong place. Here each piece is visible in the arrival and usable from the rooms that face it.",
+        zh: "从上往下看是一条轴线：车道、房子、露台、热水池、泳池。没有一件设施被丢在剩余草坪的角落里。这是整块地设计的检验标准。一件只在特写里成立的东西，通常放错了位置。这里每一部分从到达时就能看见，从朝向它的房间也能使用。",
+      },
+      service: "landscape-design",
     },
     {
       id: "front-entry",
@@ -158,6 +192,11 @@ export const DEFAULT_CONTENT: SiteContent = {
         en: "Stone pillars, layered planting and lighting turn the entry into the home's first impression after dark.",
         zh: "石柱、层次种植与灯光，让入口成为住宅在夜晚的第一印象。",
       },
+      detail: {
+        en: "The pillars and the layered beds do the same job: they slow the arrival and mark the door. Planting is in layers rather than a single hedge, so the entry has depth from the street. Lighting stays low, on the stone and the leaves, which makes the door readable at night without flooding the facade. The drive and the door are designed together, so the car and the person arrive at the same idea of the house.",
+        zh: "石柱与层次种植做的是同一件事：放慢到达，并标出门口。种植是层次而不是一道绿篱，入口从街上看才有深度。灯光压低，落在石头和叶片上，夜里能认出门，又不会把立面照得发白。车道和门一起设计，车和人到达时看到的是同一个家。",
+      },
+      service: "landscape-design",
     },
   ],
   advisory: {

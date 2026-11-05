@@ -12,8 +12,11 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as InquireRouteImport } from './routes/inquire'
+import { Route as ServicesRouteImport } from './routes/services'
 import { Route as StudioRouteImport } from './routes/studio'
 import { Route as GardenIdRouteImport } from './routes/garden.$id'
+import { Route as ServicesIndexRouteImport } from './routes/services.index'
+import { Route as ServicesSlugRouteImport } from './routes/services.$slug'
 import { Route as WorkIdRouteImport } from './routes/work.$id'
 
 const IndexRoute = IndexRouteImport.update({
@@ -31,6 +34,11 @@ const InquireRoute = InquireRouteImport.update({
   path: '/inquire',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ServicesRoute = ServicesRouteImport.update({
+  id: '/services',
+  path: '/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const StudioRoute = StudioRouteImport.update({
   id: '/studio',
   path: '/studio',
@@ -40,6 +48,16 @@ const GardenIdRoute = GardenIdRouteImport.update({
   id: '/garden/$id',
   path: '/garden/$id',
   getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesIndexRoute = ServicesIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ServicesRoute,
+} as any)
+const ServicesSlugRoute = ServicesSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => ServicesRoute,
 } as any)
 const WorkIdRoute = WorkIdRouteImport.update({
   id: '/work/$id',
@@ -51,9 +69,12 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/contact': typeof ContactRoute
   '/inquire': typeof InquireRoute
+  '/services': typeof ServicesRouteWithChildren
   '/studio': typeof StudioRoute
   '/garden/$id': typeof GardenIdRoute
+  '/services/$slug': typeof ServicesSlugRoute
   '/work/$id': typeof WorkIdRoute
+  '/services/': typeof ServicesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -61,37 +82,62 @@ export interface FileRoutesByTo {
   '/inquire': typeof InquireRoute
   '/studio': typeof StudioRoute
   '/garden/$id': typeof GardenIdRoute
+  '/services/$slug': typeof ServicesSlugRoute
   '/work/$id': typeof WorkIdRoute
+  '/services': typeof ServicesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/contact': typeof ContactRoute
   '/inquire': typeof InquireRoute
+  '/services': typeof ServicesRouteWithChildren
   '/studio': typeof StudioRoute
   '/garden/$id': typeof GardenIdRoute
+  '/services/$slug': typeof ServicesSlugRoute
   '/work/$id': typeof WorkIdRoute
+  '/services/': typeof ServicesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/contact' | '/inquire' | '/studio' | '/garden/$id' | '/work/$id'
+    | '/'
+    | '/contact'
+    | '/inquire'
+    | '/services'
+    | '/studio'
+    | '/garden/$id'
+    | '/services/$slug'
+    | '/work/$id'
+    | '/services/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/contact' | '/inquire' | '/studio' | '/garden/$id' | '/work/$id'
-  id:
-    | '__root__'
+  to:
     | '/'
     | '/contact'
     | '/inquire'
     | '/studio'
     | '/garden/$id'
+    | '/services/$slug'
     | '/work/$id'
+    | '/services'
+  id:
+    | '__root__'
+    | '/'
+    | '/contact'
+    | '/inquire'
+    | '/services'
+    | '/studio'
+    | '/garden/$id'
+    | '/services/$slug'
+    | '/work/$id'
+    | '/services/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ContactRoute: typeof ContactRoute
   InquireRoute: typeof InquireRoute
+  ServicesRoute: typeof ServicesRouteWithChildren
   StudioRoute: typeof StudioRoute
   GardenIdRoute: typeof GardenIdRoute
   WorkIdRoute: typeof WorkIdRoute
@@ -120,6 +166,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InquireRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/services': {
+      id: '/services'
+      path: '/services'
+      fullPath: '/services'
+      preLoaderRoute: typeof ServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/studio': {
       id: '/studio'
       path: '/studio'
@@ -134,6 +187,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GardenIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/services/': {
+      id: '/services/'
+      path: '/'
+      fullPath: '/services/'
+      preLoaderRoute: typeof ServicesIndexRouteImport
+      parentRoute: typeof ServicesRoute
+    }
+    '/services/$slug': {
+      id: '/services/$slug'
+      path: '/$slug'
+      fullPath: '/services/$slug'
+      preLoaderRoute: typeof ServicesSlugRouteImport
+      parentRoute: typeof ServicesRoute
+    }
     '/work/$id': {
       id: '/work/$id'
       path: '/work/$id'
@@ -144,10 +211,25 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface ServicesRouteChildren {
+  ServicesSlugRoute: typeof ServicesSlugRoute
+  ServicesIndexRoute: typeof ServicesIndexRoute
+}
+
+const ServicesRouteChildren: ServicesRouteChildren = {
+  ServicesSlugRoute: ServicesSlugRoute,
+  ServicesIndexRoute: ServicesIndexRoute,
+}
+
+const ServicesRouteWithChildren = ServicesRoute._addFileChildren(
+  ServicesRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ContactRoute: ContactRoute,
   InquireRoute: InquireRoute,
+  ServicesRoute: ServicesRouteWithChildren,
   StudioRoute: StudioRoute,
   GardenIdRoute: GardenIdRoute,
   WorkIdRoute: WorkIdRoute,

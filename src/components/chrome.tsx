@@ -73,6 +73,9 @@ export function Nav({ overlay = false }: { overlay?: boolean }) {
           ) : null}
         </Link>
         <nav className="hidden items-center gap-7 lg:flex">
+          <Link to="/services" className="min-h-11 text-sm inline-flex items-center">
+            {lang === "zh" ? "服务" : "Services"}
+          </Link>
           {LINKS.map((link) => (
             <button key={link.id} type="button" className="min-h-11 text-sm" onClick={() => go(link.id)}>
               {lang === "zh" ? link.zh : link.en}
@@ -131,6 +134,9 @@ export function Nav({ overlay = false }: { overlay?: boolean }) {
                 </button>
               </div>
               <div className="flex flex-col px-6 pt-6">
+                <Link to="/services" className="border-b border-line py-5 text-3xl" onClick={() => setOpen(false)}>
+                  {lang === "zh" ? "服务" : "Services"}
+                </Link>
                 {LINKS.map((link) => (
                   <button
                     key={link.id}
@@ -169,8 +175,18 @@ export function Footer() {
           <ContactLinks />
         </div>
         <div className="flex flex-col items-start gap-1 text-sm">
-          <Link to="/contact" className="inline-flex min-h-11 items-center">
-            {tx("开始一个项目", "Start a project")}
+          <p className="eyebrow text-muted">{tx("服务", "Services")}</p>
+          <Link to="/services/$slug" params={{ slug: "landscape-design" }} className="inline-flex min-h-11 items-center">
+            {tx("景观设计", "Landscape design")}
+          </Link>
+          <Link to="/services/$slug" params={{ slug: "pools-and-water" }} className="inline-flex min-h-11 items-center">
+            {tx("泳池与水景", "Pools and water")}
+          </Link>
+          <Link to="/services/$slug" params={{ slug: "outdoor-living" }} className="inline-flex min-h-11 items-center">
+            {tx("露台与厨房", "Terraces and kitchens")}
+          </Link>
+          <Link to="/services/$slug" params={{ slug: "property-advisory" }} className="inline-flex min-h-11 items-center">
+            {tx("地产顾问", "Property advisory")}
           </Link>
         </div>
       </div>

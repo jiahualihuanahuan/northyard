@@ -87,9 +87,34 @@ html[data-lang="zh"] .display {
   text-transform: uppercase;
 }
 
-html[data-lang="zh"] .eyebrow {
-  letter-spacing: 0.22em;
-  text-transform: none;
+html[data-lang="zh"] .bilingual-sub {
+  display: none;
+}
+
+.faq details {
+  border-bottom: 1px solid var(--color-line);
+}
+.faq summary {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 3.25rem;
+  padding: 1rem 0;
+  list-style: none;
+}
+.faq summary::-webkit-details-marker {
+  display: none;
+}
+.faq summary::after {
+  content: "+";
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  line-height: 1;
+}
+.faq details[open] summary::after {
+  content: "–";
 }
 
 .tap {

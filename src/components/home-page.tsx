@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { ArrowUpRight } from "lucide-react";
+import { JsonLd } from "@/components/json-ld";
 import { Page } from "@/components/chrome";
 import { Frame } from "@/components/frame";
+import { faqLd } from "@/lib/seo";
+import { AREAS, HOME_FAQS, SERVICES } from "@/lib/services";
 import { useSite } from "@/lib/site";
 
 const PAD = "px-5 md:px-8 lg:px-12";
@@ -22,9 +25,13 @@ export function HomePage() {
 
   return (
     <Page overlay>
+      <JsonLd data={faqLd(HOME_FAQS)} />
       <Hero />
       <Approach />
+      <Services />
+      <Where />
       <SelectedWork />
+      <Questions />
       <Advisory />
       <ContactCta />
     </Page>
@@ -55,6 +62,9 @@ function Hero() {
         <div className="hero-copy" style={{ maxWidth: "44rem" }}>
           <p className="eyebrow">{t(content.tagline)}</p>
           <h1 className="display mt-4 text-5xl md:text-6xl lg:text-7xl">{t(hero.headline)}</h1>
+          <p lang="zh" className="bilingual-sub mt-3 text-lg text-on-photo/80">
+            {hero.headline.zh}
+          </p>
           <p className="mt-5 max-w-lg text-base leading-7 text-on-photo/85">{t(hero.body)}</p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link to="/contact" className="tap inline-flex min-h-11 items-center bg-accent px-6 text-sm text-accent-fg">
@@ -80,6 +90,73 @@ function Approach() {
         <p className="mt-6 text-base leading-7 text-muted">{t(a.body)}</p>
       </div>
       <Frame src={a.image} alt={t(a.alt)} className="aspect-3/2 md:col-span-7" />
+    </section>
+  );
+}
+
+function Services() {
+  const { t, tx } = useSite();
+  return (
+    <section id="services" className={`border-t border-line py-24 md:py-32 ${PAD}`}>
+      <div className="flex flex-wrap items-end justify-between gap-6">
+        <h2 className="display max-w-3xl text-4xl md:text-6xl">
+          {tx("服务从整块地开始。", "The work starts with the whole lot.")}
+        </h2>
+        <Link to="/services" className="group inline-flex min-h-11 items-center gap-2 text-sm">
+          {tx("全部服务", "All services")}
+          <ArrowUpRight className={ARROW} />
+        </Link>
+      </div>
+      <div className="mt-16 border-t border-line">
+        {SERVICES.map((service) => (
+          <Link
+            key={service.slug}
+            to="/services/$slug"
+            params={{ slug: service.slug }}
+            className="group grid gap-2 border-b border-line py-7 md:grid-cols-12 md:items-baseline"
+          >
+            <span className="eyebrow text-muted md:col-span-4">{t(service.nav)}</span>
+            <span className="display text-3xl md:col-span-8">{t(service.headline)}</span>
+          </Link>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function Where() {
+  const { tx } = useSite();
+  return (
+    <section id="where" className={`border-t border-line py-24 md:py-28 ${PAD}`}>
+      <p className="eyebrow text-muted">{tx("服务地区", "Where")}</p>
+      <h2 className="display mt-4 max-w-3xl text-4xl md:text-6xl">
+        {tx("多伦多与约克区。", "Toronto and York Region.")}
+      </h2>
+      <p className="mt-6 max-w-xl text-base leading-7 text-muted">
+        {tx(
+          "目前的项目在北约克、万锦、列治文山、旺市、奥罗拉、索恩希尔，以及多伦多与约克区周边。",
+          `Current work is in ${AREAS}, and on nearby streets across Toronto and York Region.`,
+        )}
+      </p>
+    </section>
+  );
+}
+
+function Questions() {
+  const { t, tx } = useSite();
+  return (
+    <section id="questions" className={`border-t border-line py-24 md:py-32 ${PAD}`}>
+      <h2 className="display max-w-3xl text-4xl md:text-6xl">
+        {tx("先问的几件事。", "Questions people ask first.")}
+      </h2>
+      <div className="faq mt-12 max-w-3xl">
+        {HOME_FAQS.map((faq) => (
+          <details key={faq.q.en}>
+            <summary className="text-base">{t(faq.q)}</summary>
+            <p className="pb-5 text-sm leading-6 text-muted">{t(faq.a)}</p>
+          </details>
+        ))}
+      </div>
     </section>
   );
 }

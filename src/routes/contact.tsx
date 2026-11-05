@@ -2,7 +2,8 @@ import { useState, type FormEvent } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { ContactLinks, Page } from "@/components/chrome";
 import { Frame } from "@/components/frame";
-import { SITE_URL, type T } from "@/lib/content";
+import { type T } from "@/lib/content";
+import { pageHead } from "@/lib/seo";
 import { useSite } from "@/lib/site";
 
 const AREAS = [
@@ -26,13 +27,13 @@ export const Route = createFileRoute("/contact")({
     const type = TYPES.find((x) => x.id === search.type)?.id;
     return type ? { type } : {};
   },
-  head: () => ({
-    meta: [
-      { title: "Contact — Jenny Bu" },
-      { property: "og:url", content: `${SITE_URL}/contact` },
-    ],
-    links: [{ rel: "canonical", href: `${SITE_URL}/contact` }],
-  }),
+  head: () =>
+    pageHead({
+      title: "Contact Jenny Bu — Landscape Projects in Toronto & York Region",
+      description:
+        "Start a landscape project or ask about property advisory. Homes in Toronto, Markham, Richmond Hill, Vaughan, Aurora and the rest of York Region.",
+      path: "/contact",
+    }),
   component: ContactPage,
 });
 
