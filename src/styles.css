@@ -217,6 +217,13 @@ html[data-lang="zh"] .eyebrow {
 }
 .frame img.is-loading {
   opacity: 0;
+  /* CSS-only safety net: never stay hidden even if JS/onLoad never fires. */
+  animation: frame-force-show 0s linear 3s forwards;
+}
+@keyframes frame-force-show {
+  to {
+    opacity: 1;
+  }
 }
 
 .compare {
