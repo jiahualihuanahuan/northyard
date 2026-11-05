@@ -7,6 +7,7 @@ import { Frame } from "@/components/frame";
 import { faqLd } from "@/lib/seo";
 import { AREAS, HOME_FAQS, SERVICES } from "@/lib/services";
 import { useSite } from "@/lib/site";
+import { LISTINGS, STAGING } from "@/lib/ventures";
 
 const PAD = "px-5 md:px-8 lg:px-12";
 const ARROW =
@@ -31,6 +32,7 @@ export function HomePage() {
       <Services />
       <Where />
       <SelectedWork />
+      <Also />
       <Questions />
       <Advisory />
       <ContactCta />
@@ -181,6 +183,48 @@ function SelectedWork() {
             </Link>
           </article>
         ))}
+      </div>
+    </section>
+  );
+}
+
+function Also() {
+  const { t, tx } = useSite();
+  const listing = LISTINGS[0];
+  const photo = STAGING.images[0];
+  return (
+    <section id="also" className={`border-t border-line py-24 md:py-32 ${PAD}`}>
+      <h2 className="display max-w-3xl text-4xl md:text-6xl">
+        {tx("房子里面，和在卖的房子。", "Inside the house, and the house itself.")}
+      </h2>
+      <div className="mt-16 grid gap-16 md:grid-cols-2">
+        <article>
+          <Link to="/staging" className="group block">
+            <Frame src={photo.src} alt={t(photo.alt)} className="aspect-3/2" />
+            <p className="eyebrow mt-5 text-muted">{t(STAGING.nav)}</p>
+            <h3 className="display mt-3 text-3xl">{t(STAGING.headline)}</h3>
+            <p className="mt-3 text-sm leading-6 text-muted">{t(STAGING.card)}</p>
+            <span className="mt-4 inline-flex min-h-11 items-center gap-2 text-sm">
+              {tx("再看几间", "See the rooms")}
+              <ArrowUpRight className={ARROW} />
+            </span>
+          </Link>
+        </article>
+        <article>
+          <Link to="/listings/$mls" params={{ mls: listing.mls }} className="group block">
+            <Frame src={listing.image} alt={t(listing.alt)} className="aspect-3/2" />
+            <p className="eyebrow mt-5 text-muted">{tx("在售", "For sale")}</p>
+            <h3 className="display mt-3 text-3xl">{listing.address}</h3>
+            <p className="mt-3 text-sm leading-6 text-muted">
+              {t(listing.area)} · {listing.price}
+            </p>
+            <p className="mt-2 text-sm leading-6 text-muted">{t(listing.summary)}</p>
+            <span className="mt-4 inline-flex min-h-11 items-center gap-2 text-sm">
+              {tx("看这套房", "See the house")}
+              <ArrowUpRight className={ARROW} />
+            </span>
+          </Link>
+        </article>
       </div>
     </section>
   );

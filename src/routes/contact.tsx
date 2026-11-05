@@ -18,14 +18,17 @@ const TYPES = [
   { id: "entry", label: { en: "Entry & driveway", zh: "入口与车道" } },
   { id: "full", label: { en: "Full property", zh: "整体庭院" } },
   { id: "advisory", label: { en: "Property advisory", zh: "地产顾问" } },
+  { id: "staging", label: { en: "Interior staging", zh: "室内陈设" } },
+  { id: "listing", label: { en: "A house for sale", zh: "在售房屋" } },
 ] as const satisfies readonly { id: string; label: T }[];
 
 type TypeId = (typeof TYPES)[number]["id"];
 
 export const Route = createFileRoute("/contact")({
-  validateSearch: (search: Record<string, unknown>): { type?: TypeId } => {
+  validateSearch: (search: Record<string, unknown>): { type?: TypeId; about?: string } => {
     const type = TYPES.find((x) => x.id === search.type)?.id;
-    return type ? { type } : {};
+    const about = typeof search.about === "string" ? search.about.slice(0, 180) : undefined;
+    return { ...(type ? { type } : {}), ...(about ? { about } : {}) };
   },
   head: () =>
     pageHead({
@@ -56,7 +59,7 @@ function ContactPage() {
   const [reach, setReach] = useState("");
   const [area, setArea] = useState<string>("toronto");
   const [type, setType] = useState<string>(search.type ?? "full");
-  const [notes, setNotes] = useState("");
+  const [notes, setNotes] = useState(search.about ?? "");
   const [state, setState] = useState<"idle" | "sending" | "sent" | "failed">("idle");
   const [error, setError] = useState("");
   const [reason, setReason] = useState("");
@@ -64,7 +67,7 @@ function ContactPage() {
 
   const areaEn = AREAS.find((a) => a.id === area)?.label.en ?? area;
   const typeEn = TYPES.find((x) => x.id === type)?.label.en ?? type;
-  const subject = `Website inquiry: ${typeEn} — ${name.trim()}`;
+  const subject = `Northyard inquiry — ${typeEn}`;
   const bodyText = [
     `Name: ${name}`,
     `Email or phone: ${reach}`,

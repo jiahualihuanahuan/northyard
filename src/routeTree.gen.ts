@@ -13,8 +13,10 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as InquireRouteImport } from './routes/inquire'
 import { Route as ServicesRouteImport } from './routes/services'
+import { Route as StagingRouteImport } from './routes/staging'
 import { Route as StudioRouteImport } from './routes/studio'
 import { Route as GardenIdRouteImport } from './routes/garden.$id'
+import { Route as ListingsMlsRouteImport } from './routes/listings.$mls'
 import { Route as ServicesIndexRouteImport } from './routes/services.index'
 import { Route as ServicesSlugRouteImport } from './routes/services.$slug'
 import { Route as WorkIdRouteImport } from './routes/work.$id'
@@ -39,6 +41,11 @@ const ServicesRoute = ServicesRouteImport.update({
   path: '/services',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StagingRoute = StagingRouteImport.update({
+  id: '/staging',
+  path: '/staging',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const StudioRoute = StudioRouteImport.update({
   id: '/studio',
   path: '/studio',
@@ -47,6 +54,11 @@ const StudioRoute = StudioRouteImport.update({
 const GardenIdRoute = GardenIdRouteImport.update({
   id: '/garden/$id',
   path: '/garden/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ListingsMlsRoute = ListingsMlsRouteImport.update({
+  id: '/listings/$mls',
+  path: '/listings/$mls',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ServicesIndexRoute = ServicesIndexRouteImport.update({
@@ -70,8 +82,10 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/inquire': typeof InquireRoute
   '/services': typeof ServicesRouteWithChildren
+  '/staging': typeof StagingRoute
   '/studio': typeof StudioRoute
   '/garden/$id': typeof GardenIdRoute
+  '/listings/$mls': typeof ListingsMlsRoute
   '/services/$slug': typeof ServicesSlugRoute
   '/work/$id': typeof WorkIdRoute
   '/services/': typeof ServicesIndexRoute
@@ -80,8 +94,10 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/contact': typeof ContactRoute
   '/inquire': typeof InquireRoute
+  '/staging': typeof StagingRoute
   '/studio': typeof StudioRoute
   '/garden/$id': typeof GardenIdRoute
+  '/listings/$mls': typeof ListingsMlsRoute
   '/services/$slug': typeof ServicesSlugRoute
   '/work/$id': typeof WorkIdRoute
   '/services': typeof ServicesIndexRoute
@@ -92,8 +108,10 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/inquire': typeof InquireRoute
   '/services': typeof ServicesRouteWithChildren
+  '/staging': typeof StagingRoute
   '/studio': typeof StudioRoute
   '/garden/$id': typeof GardenIdRoute
+  '/listings/$mls': typeof ListingsMlsRoute
   '/services/$slug': typeof ServicesSlugRoute
   '/work/$id': typeof WorkIdRoute
   '/services/': typeof ServicesIndexRoute
@@ -105,8 +123,10 @@ export interface FileRouteTypes {
     | '/contact'
     | '/inquire'
     | '/services'
+    | '/staging'
     | '/studio'
     | '/garden/$id'
+    | '/listings/$mls'
     | '/services/$slug'
     | '/work/$id'
     | '/services/'
@@ -115,8 +135,10 @@ export interface FileRouteTypes {
     | '/'
     | '/contact'
     | '/inquire'
+    | '/staging'
     | '/studio'
     | '/garden/$id'
+    | '/listings/$mls'
     | '/services/$slug'
     | '/work/$id'
     | '/services'
@@ -126,8 +148,10 @@ export interface FileRouteTypes {
     | '/contact'
     | '/inquire'
     | '/services'
+    | '/staging'
     | '/studio'
     | '/garden/$id'
+    | '/listings/$mls'
     | '/services/$slug'
     | '/work/$id'
     | '/services/'
@@ -138,8 +162,10 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   InquireRoute: typeof InquireRoute
   ServicesRoute: typeof ServicesRouteWithChildren
+  StagingRoute: typeof StagingRoute
   StudioRoute: typeof StudioRoute
   GardenIdRoute: typeof GardenIdRoute
+  ListingsMlsRoute: typeof ListingsMlsRoute
   WorkIdRoute: typeof WorkIdRoute
 }
 
@@ -173,6 +199,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServicesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/staging': {
+      id: '/staging'
+      path: '/staging'
+      fullPath: '/staging'
+      preLoaderRoute: typeof StagingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/studio': {
       id: '/studio'
       path: '/studio'
@@ -185,6 +218,13 @@ declare module '@tanstack/react-router' {
       path: '/garden/$id'
       fullPath: '/garden/$id'
       preLoaderRoute: typeof GardenIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/listings/$mls': {
+      id: '/listings/$mls'
+      path: '/listings/$mls'
+      fullPath: '/listings/$mls'
+      preLoaderRoute: typeof ListingsMlsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/services/': {
@@ -230,8 +270,10 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   InquireRoute: InquireRoute,
   ServicesRoute: ServicesRouteWithChildren,
+  StagingRoute: StagingRoute,
   StudioRoute: StudioRoute,
   GardenIdRoute: GardenIdRoute,
+  ListingsMlsRoute: ListingsMlsRoute,
   WorkIdRoute: WorkIdRoute,
 }
 export const routeTree = rootRouteImport

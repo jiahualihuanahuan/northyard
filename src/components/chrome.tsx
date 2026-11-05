@@ -7,6 +7,7 @@ import { useSite } from "@/lib/site";
 
 const LINKS = [
   { id: "work", zh: "作品", en: "Work" },
+  { id: "also", zh: "陈设与售房", en: "Also" },
   { id: "approach", zh: "理念", en: "Approach" },
   { id: "advisory", zh: "地产顾问", en: "Advisory" },
 ] as const;
@@ -187,6 +188,12 @@ export function Footer() {
           </Link>
           <Link to="/services/$slug" params={{ slug: "property-advisory" }} className="inline-flex min-h-11 items-center">
             {tx("地产顾问", "Property advisory")}
+          </Link>
+          <Link to="/staging" className="inline-flex min-h-11 items-center">
+            {tx("室内陈设", "Interior staging")}
+          </Link>
+          <Link to="/listings/$mls" params={{ mls: "N14119300" }} className="inline-flex min-h-11 items-center">
+            {tx("在售房屋", "A house for sale")}
           </Link>
         </div>
       </div>
