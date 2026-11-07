@@ -87,10 +87,6 @@ html[data-lang="zh"] .display {
   text-transform: uppercase;
 }
 
-html[data-lang="zh"] .bilingual-sub {
-  display: none;
-}
-
 .faq details {
   border-bottom: 1px solid var(--color-line);
 }

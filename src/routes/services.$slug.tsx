@@ -51,9 +51,6 @@ function ServiceRoute() {
               <span> · {t(service.eyebrow)}</span>
             </p>
             <h1 className="display mt-4 text-5xl md:text-7xl">{t(service.headline)}</h1>
-            <p lang="zh" className="bilingual-sub mt-4 text-lg text-muted">
-              {service.headline.zh}
-            </p>
             <p className="mt-6 max-w-xl text-base leading-7 text-muted">{t(service.lead)}</p>
           </div>
         </header>

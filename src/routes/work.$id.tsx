@@ -67,9 +67,6 @@ function WorkPage() {
               </Link>
             </p>
             <h1 className="display mt-4 text-5xl md:text-6xl">{t(item.title)}</h1>
-            <p lang="zh" className="bilingual-sub mt-4 text-lg text-muted">
-              {item.title.zh}
-            </p>
           </div>
           <div className="md:col-span-5 md:col-start-8">
             <p className="text-base leading-7 text-muted">{t(item.body)}</p>

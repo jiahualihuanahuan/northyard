@@ -24,9 +24,6 @@ function ServicesIndex() {
         <h1 className="display mt-4 max-w-4xl text-5xl md:text-7xl">
           {tx("四件事，都落在同一块地上。", "Four kinds of work, one property.")}
         </h1>
-        <p lang="zh" className="bilingual-sub mt-4 text-lg text-muted">
-          四件事，都落在同一块地上。
-        </p>
         <p className="mt-6 max-w-xl text-base leading-7 text-muted">
           {tx(
             "服务多伦多与约克区的住宅，包括北约克、万锦、列治文山、旺市、奥罗拉与索恩希尔。",

@@ -64,9 +64,6 @@ function Hero() {
         <div className="hero-copy" style={{ maxWidth: "44rem" }}>
           <p className="eyebrow">{t(content.tagline)}</p>
           <h1 className="display mt-4 text-5xl md:text-6xl lg:text-7xl">{t(hero.headline)}</h1>
-          <p lang="zh" className="bilingual-sub mt-3 text-lg text-on-photo/80">
-            {hero.headline.zh}
-          </p>
           <p className="mt-5 max-w-lg text-base leading-7 text-on-photo/85">{t(hero.body)}</p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link to="/contact" className="tap inline-flex min-h-11 items-center bg-accent px-6 text-sm text-accent-fg">

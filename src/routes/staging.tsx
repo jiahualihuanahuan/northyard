@@ -28,9 +28,6 @@ function StagingPage() {
           <div className="md:col-span-6">
             <p className="eyebrow text-muted">{t(STAGING.nav)}</p>
             <h1 className="display mt-4 text-5xl md:text-6xl">{t(STAGING.headline)}</h1>
-            <p lang="zh" className="bilingual-sub mt-4 text-lg text-muted">
-              {STAGING.headline.zh}
-            </p>
           </div>
           <div className="md:col-span-5 md:col-start-8">
             <p className="text-base leading-7 text-muted">{t(STAGING.body)}</p>
